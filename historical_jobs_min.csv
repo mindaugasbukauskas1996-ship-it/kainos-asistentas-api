@@ -1,0 +1,299 @@
+job_id,registration_nr_full,address_final,samatos_pavadinimas,contractor,work_type,qty_extracted,unit,cost_be_pvm_eur,unit_price
+1,V25-0286933-6,Naikupės g. 12A,"Stogo prilydomos dangos keitimas, 2 sl.","Truopni meistrai, MB_21",ROOF,18.0,m2,4290.0,238.33333333333334
+2,V25-0230754-1,Baltijos pr. 107,Karšto vandens stovo atkarpos keitimas,"Mano Būstas Baltija, UAB",PIPE_STACK,0.5,m,182.14,364.28
+3,V25-0273699-6,Tiltų g. 9,Kanalizacijos vamzdyno remonto darbai,"Noske, UAB_21",SEWER,1.0,m,433.73,433.73
+4,V24-0371659-6,Šturmanų g. 20,Nuotekų stovo keitimas (skersmuo 100 mm.),"Noske, UAB_21",SEWER,2.0,m,321.45,160.725
+5,V23-0405065-19,Sulupės g. 12,Šildymo sistemos radiatoriaus keitimas 2-oje laiptinėje,"Noske, UAB_21",RADIATOR,20.0,vnt,572.19,28.609500000000004
+6,V25-0253748-2,Poilsio g. 39,Karšto ir cirkuliacinio vandens stovų ventilių keitimas (skersmuo iki 40 mm.),"Noske, UAB_21",SEWER,1.0,vnt,325.0,325.0
+7,V25-0292497-3,Poilsio g. 20,Karšto vandens vamzdyno remonto darbai,"Noske, UAB_21",PIPE,2.5,m,211.54,84.616
+8,V25-0212389-2,Rumpiškės g. 26,"Šildymo sistemos stovo keitimas, trieigio ventilio keitimas","Noske, UAB_21",PIPE_STACK,3.0,vnt,342.99,114.33
+9,V25-0218726-4,J. Karoso g. 3,"Karšto vandens stovo atkarpos keitimas, 2-a laiptinė","Noske, UAB_21",PIPE_STACK,1.0,m,490.46,490.46
+10,V25-0238219-6,Vilties g. 3,Šlaitinio stogo remontas,MB Autobokštelio paslaugos_0,ROOF,5.0,vnt,358.0,71.6
+11,V25-0387884,Ganyklų g. 10A,Lietlovių valymas,"Dapreka, MB_21",PIPE,1.0,m,277.6,277.6
+12,V25-0387882,Ganyklų g. 8C,Lietlovių valymas,"Dapreka, MB_21",PIPE,1.0,m,624.6,624.6
+13,V25-0387885,Ganyklų g. 12,Lietlovių valymas,"Dapreka, MB_21",PIPE,1.0,m,124.92,124.92
+14,V25-0388544-1,H. Manto g. 46,Lietlovių valymas,"Dapreka, MB_21",PIPE,1.0,m,666.45,666.45
+15,V25-0388408,J. Karoso g. 18,Lietlovių valymas,"Dapreka, MB_21",PIPE,1.0,m,426.45,426.45
+16,V25-0388546-1,M. Mažvydo al. 9A,Lietlovių valymas,"Dapreka, MB_21",PIPE,1.0,m,595.04,595.04
+17,V25-0387883,Ganyklų g. 10,Lietlovių valymas,"Dapreka, MB_0",PIPE,1.0,m,277.6,277.6
+18,V25-0318736-3,Ašaralio g. 4,Nuotekų stovo diagnostika su vaizdo kamera,"Biostera, MB_21",SEWER,6.0,m,159.6,26.599999999999998
+19,V25-0287131,Prieplaukos g. 14M,Telefonspynės remonto darbai. 1 laiptinė,"Asvegas, UAB_21",PIPE_STACK,14.0,m,105.82,7.558571428571428
+20,V25-0215376-43,Nidos g. 54,"Išorinių sienų tarpblokinių siūlių remontas, blokų gruntavimas",Alpinus LT UAB_21,FACADE_SEAM,27.0,vnt,3815.71,141.3225925925926
+21,V25-0073062-7,Nidos g. 40,Judesio daviklio keitimas,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,54.09,18.03
+22,V25-0313122,Žalgirio g. 7,Judesio daviklių keitimas. 2 laiptinė,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,101.16,33.72
+23,V25-0328043,Sulupės g. 13,Lemputės keitimas bendro naudojimo patalpose,"Mano Būstas Baltija, UAB",LIGHT,2.5,m,8.26,3.304
+24,V25-0365730,Kauno g. 47,Lempų keitimas bendro naudojimo patalpose,"Mano Būstas Baltija, UAB",LIGHT,1.0,vnt,24.78,24.78
+25,V25-0343225,Rambyno g. 7,Lempų keitimas bendro naudojimo patalpose,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,16.52,5.506666666666667
+26,V25-0313122,Žalgirio g. 7,Judesio daviklių keitimas. 2 laiptinė,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,101.16,33.72
+27,V25-0224455,Sulupės g. 13,Pakabinamos spynos montavimas,"Mano Būstas Baltija, UAB",LOCK_DOOR,5.0,vnt,44.6,8.92
+28,V25-0073062-9,Nidos g. 40,Judesio daviklio keitimas,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,-54.09,-18.03
+29,V25-0314370-1,Sausio 15-osios g. 24,"Lempų keitimas bendro naudojimo patalpose, 2 vnt","Mano Būstas Baltija, UAB",LIGHT,2.0,vnt,16.51,8.255
+30,V25-0073062-9,Nidos g. 40,Judesio daviklio keitimas,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,54.09,18.03
+31,V25-0257771,Šilutės pl. 12,"Karšto vandens vamzdynų sistemos būklės įvertinimas, išvadų pateikimas","Mano Būstas Baltija, UAB",PIPE,7.0,m,70.0,10.0
+32,V25-0358657,Naikupės g. 17A,Lempų keitimas bendro naudojimo patalpose,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,8.26,2.7533333333333334
+33,V25-0307583-2,Ganyklų g. 10A,"Apšvietimo sistemos įrangos, prietaisų (mechanizmų) veikimo kontrolės darbai, defektų šalinimo rekomendacijų pateikimas","Mano Būstas Baltija, UAB",PIPE_STACK,5.0,vnt,70.0,14.0
+34,V25-0208670-2,Žemaičių g. 5G,Lempų keitimas bendro naudojimo patalpose,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,8.26,2.7533333333333334
+35,V25-0383281-1,Liepų g. 25,"Apšvietimo sistemos įrangos, prietaisų (mechanizmų) veikimo kontrolės darbai","Mano Būstas Baltija, UAB",LIGHT,3.0,m,17.5,5.833333333333333
+36,V25-0357926-2,Kalnupės g. 11A,Elektros apskaitos skydų renovavimas,"Mano Būstas Baltija, UAB",LIGHT,5.0,vnt,3741.74,748.348
+37,V25-0328043-1,Sulupės g. 13,Judesio daviklio keitimas. 2 laiptinė,"Mano Būstas Baltija, UAB",LIGHT,2.5,m,53.8,21.52
+38,V25-0002938-9,Šilutės pl. 12,"Fasado remonto darbai, spyglių nuo paukščių įrengimas","Mano Būstas Baltija, UAB",ROOF,2.0,m,2102.0,1051.0
+39,V25-0288867-2,Jono g. 2,"Lempų keitimas bendro naudojimo patalpose, 2 vnt","Mano Būstas Baltija, UAB",LIGHT,2.0,vnt,16.51,8.255
+40,V25-0328043-1,Sulupės g. 13,Judesio daviklio keitimas. 2 laiptinė,"Mano Būstas Baltija, UAB",LIGHT,2.5,m,53.8,21.52
+41,V25-0368750-4,Kalnupės g. 7,"Šildymo sistemos temperatūros reguliavimas, atstatymas","Mano Būstas Baltija, UAB",PIPE_STACK,4.0,vnt,52.5,13.125
+42,V25-0073062-9,Nidos g. 40,Judesio daviklio keitimas,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,54.09,18.03
+43,V25-0073062-7,Nidos g. 40,Judesio daviklio keitimas,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,54.09,18.03
+44,V25-0299607-1,Minijos g. 157,"Lempų keitimas bendro naudojimo patalpose, 3 vnt","Mano Būstas Baltija, UAB",LIGHT,3.0,vnt,24.77,8.256666666666666
+45,V25-0328043,Sulupės g. 13,Lemputės keitimas bendro naudojimo patalpose,"Mano Būstas Baltija, UAB",LIGHT,2.5,m,8.26,3.304
+46,V25-0073062-9,Nidos g. 40,Judesio daviklio keitimas,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,54.09,18.03
+47,V25-0273699-5,S. Daukanto g. 20,Avariniai nuotekų tinklų vamzdynų valymo darbai bendro naudojimo vamzdynuose,"Mano Būstas Baltija, UAB",SEWER,1.0,m,35.0,35.0
+48,V25-0358835-1,"Kalnupės g.   11A, Klaipėda",,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,4.0,1.3333333333333333
+49,V25-0312214,Šilutės pl. 24,Šviestuvų Italia su judesio davikliu montavimas arba keitimas,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,48.68,16.226666666666667
+50,V25-0299607-1,Minijos g. 157,"Lempų keitimas bendro naudojimo patalpose, 3 vnt","Mano Būstas Baltija, UAB",LIGHT,3.0,vnt,24.77,8.256666666666666
+51,V25-0287165,Minijos g. 130B,Judesio daviklio keitimas,"Mano Būstas Baltija, UAB",PIPE_STACK,3.0,m,35.0,11.666666666666666
+52,V25-0292497-6,Liepų g. 39,Karšto vandens tiekimo išjungimas stovui dėl remonto darbų bute,"Mano Būstas Baltija, UAB",PIPE_STACK,2.5,m,35.0,14.0
+53,V23-0405065-19,Sulupės g. 12,Šildymo sistemos radiatoriaus keitimas 2-oje laiptinėje,"Mano Būstas Baltija, UAB",RADIATOR,20.0,vnt,572.19,28.609500000000004
+54,V25-0312214,Šilutės pl. 24,Šviestuvų Italia su judesio davikliu montavimas arba keitimas,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,48.68,16.226666666666667
+55,V25-0253748-2,S. Daukanto g. 28,Karšto ir cirkuliacinio vandens stovų ventilių keitimas (skersmuo iki 40 mm.),"Mano Būstas Baltija, UAB",SEWER,1.0,vnt,35.0,35.0
+56,V25-0383281-2,Liepų g. 25,Lempų keitimas bendro naudojimo patalpose,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,8.26,2.7533333333333334
+57,V25-0234837-7,Tilžės g. 48,Pavienių čerpių keitimas iki 1m2,"Mano Būstas Baltija, UAB",ROOF,1.0,m2,143.0,143.0
+58,V25-0314370-1,Sausio 15-osios g. 24,"Lempų keitimas bendro naudojimo patalpose, 2 vnt","Mano Būstas Baltija, UAB",LIGHT,2.0,vnt,16.51,8.255
+59,V25-0358835,Kalnupės g. 11A,Judesio daviklio keitimas,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,52.11,17.37
+60,V25-0221857,Minijos g. 126,Šviestuvo su judesio davikliu keitimas prie 3-ios laiptinės įėjimo,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,63.55,21.183333333333334
+61,V25-0258757-4,Pietinė g. 13,Sutapdinto stogo remonto darbai,"Truopni meistrai, MB_21",ROOF,100.0,m2,3510.0,35.1
+62,V25-0368277-3,Baltijos pr. 91,Nuotekų vamzdyno atkarpos keitimas rūsyje,"Noske, UAB_21",SEWER,4.0,m,419.55,104.8875
+63,V25-0256836-2,Debreceno g. 56,Šildymo sistemos stovo ventilių keitimas su drenažinių ventilių keitimu (skersmuo - iki 40 mm.),"Noske, UAB_21",PIPE_STACK,12.0,vnt,2066.0,172.16666666666666
+64,V25-0404619-2,I. Simonaitytės g. 5,Šildymo sistemos radiatoriaus kamščio su nuorintoju keitimas 59-ame bute,"Noske, UAB_21",RADIATOR,1.0,vnt,92.18,92.18
+65,V25-0292749-3,Debreceno g. 76,"Šildymo sistemos remonto darbai ties 43-iu butu, 3-ia laiptinė","Noske, UAB_21",RADIATOR,3.0,vnt,626.37,208.79
+66,V25-0325886-3,Debreceno g. 14,"Šildymo radiatoriaus kamščių su nuorintojais keitimas, 3 vnt","Noske, UAB_21",RADIATOR,3.0,vnt,183.04,61.01333333333333
+67,V25-0342789-2,Debreceno g. 58,Šildymo sistemos radiatoriaus nuorintojų ir kamščių keitimas,"Noske, UAB_21",RADIATOR,2.0,vnt,164.61,82.305
+68,V25-0256836-2,Debreceno g. 56,Šildymo sistemos stovo ventilių keitimas su drenažinių ventilių keitimu (skersmuo - iki 40 mm.),"Noske, UAB_21",PIPE_STACK,12.0,vnt,297.63,24.8025
+69,V25-0333207-2,Taikos pr. 77,Šildymo sistemos vamzdyno remonto darbai,"Noske, UAB_21",PIPE,1.0,vnt,224.19,224.19
+70,V25-0090052-10,Taikos pr. 83,Karšto vandens vamzdyno remonto darbai,"Noske, UAB_21",SEWER,2.0,m,318.87,159.435
+71,V25-0345771,Reikjaviko g. 6,Šildymo sistemos stovo ir trieigių vožtuvų keitimas 81-ame bute,"Noske, UAB_21",PIPE_STACK,5.0,vnt,1418.19,283.63800000000003
+72,V25-0346673-2,Vingio g. 11,Šildymo sistemos nuorintojų montavimas,"Noske, UAB_21",RADIATOR,2.0,vnt,187.92,93.96
+73,V25-0346673-2,Vingio g. 11,Šildymo sistemos nuorintojų montavimas,"Noske, UAB_21",RADIATOR,2.0,vnt,187.92,93.96
+74,V25-0262003-2,Debreceno g. 46,Karšto vandens ventilių su drenažiniais ventiliais keitimas rūsyje,"Noske, UAB_21",PIPE_STACK,2.0,vnt,387.63,193.815
+75,V25-0271399-2,Debreceno g. 20,Šildymo sistemos trieigio vožtuvo ir vamzdyno atkarpų keitimas ties 28-u butu,"Noske, UAB_21",PIPE,1.0,vnt,-374.18,-374.18
+76,V25-0345771,Reikjaviko g. 6,Šildymo sistemos stovo ir trieigių vožtuvų keitimas 81-ame bute,"Noske, UAB_21",PIPE_STACK,5.0,vnt,1418.19,283.63800000000003
+77,V25-0315943-3,Šilutės pl. 42,Karšto ir cirkuliacinio vandens stovų ventilių su drenažiniais ventiliais ir cirkuliacinio siurblio keitimas,"Noske, UAB_21",PIPE_STACK,10.0,vnt,2021.64,202.16400000000002
+78,V25-0270744-4,Baltijos pr. 69,Šildymo sistemos stovo keitimas (skersmuo - iki 40 mm.),"Noske, UAB_21",PIPE_STACK,1.0,vnt,424.83,424.83
+79,V25-0348277-2,Baltijos pr. 83,Šildymo sistemos radiatoriaus nuorintojų keitimas,"Noske, UAB_21",PIPE_STACK,7.0,vnt,287.39,41.05571428571428
+80,V25-0414109-1,Debreceno g. 46,Karšto vandens vamzdyno remonto darbai rūsyje,"Noske, UAB_21",PIPE,1.0,vnt,397.15,397.15
+81,V25-0358169-3,Debreceno g. 46,Šildymo sistemos stovo ventilių keitimas su drenažinių ventilių keitimu,"Noske, UAB_21",PIPE_STACK,2.0,vnt,426.64,213.32
+82,V25-0352563-2,Taikos pr. 123,"Šildymo radiatoriaus kamščių su nuorintojais keitimas, 2 vnt","Noske, UAB_21",RADIATOR,2.0,vnt,143.0,71.5
+83,V25-0381365-2,I. Simonaitytės g. 1,Šildymo sistemos nuorintojo montavimas,"Noske, UAB_21",RADIATOR,1.0,vnt,89.93,89.93
+84,V25-0331055-3,Šilutės pl. 86,Nuotekų stovo keitimas (skersmuo 100 mm.),"Noske, UAB_21",SEWER,1.0,m,563.73,563.73
+85,V25-0314214-4,Alksnynės g. 15,Šildymo sistemos stovo keitimas (skersmuo - iki 40 mm.),"Noske, UAB_21",PIPE_STACK,2.0,vnt,783.07,391.535
+86,V25-0345771,Reikjaviko g. 6,Šildymo sistemos stovo ir trieigių vožtuvų keitimas 81-ame bute,"Noske, UAB_21",PIPE_STACK,5.0,vnt,-1418.19,-283.63800000000003
+87,V25-0279985-2,Debreceno g. 40,Karšto ir cirkuliacinio vandens stovų ventilių ir drenažinių ventilių keitimas techniniame koridoriuje,"Noske, UAB_21",PIPE_STACK,2.0,vnt,330.92,165.46
+88,V25-0276589-5,Debreceno g. 20,Trieigių vožtuvų ir vamzdyno atkarpos keitimas,"Noske, UAB_21",PIPE,2.0,vnt,538.91,269.455
+89,V25-0407994-1,Debreceno g. 14,Karšto vandens ventilio su drenažiniu ventiliu keitimas rūsyje,"Noske, UAB_21",PIPE_STACK,1.0,vnt,167.82,167.82
+90,V25-0271399-2,Debreceno g. 20,Šildymo sistemos trieigio vožtuvo ir vamzdyno atkarpų keitimas ties 28-u butu,"Noske, UAB_21",PIPE,1.0,vnt,303.73,303.73
+91,V25-0217903-7,Debreceno g. 60,Sutapdinto stogo dangos atskirų vietų remonto darbai (iki 10m2),"Komandax, MB_21",ROOF,10.0,m2,286.0,28.6
+92,V25-0143809-3,Debreceno g. 56,"Nuotekų stovo frezavimas, alsuoklių remontas CIPP metodu","Biostera, MB_21",SEWER,2.0,vnt,800.0,400.0
+93,V25-0143809-3,Debreceno g. 56,"Nuotekų stovo frezavimas, alsuoklių remontas CIPP metodu","Biostera, MB_21",SEWER,2.0,vnt,1913.2,956.6
+94,V25-0143881-4,I. Simonaitytės g. 32,Nuotekų stovo alsuoklio atkimšimas ir remontas,"Biostera, MB_21",SEWER,3.0,vnt,2713.2,904.4
+95,V25-0388553,Baltijos pr. 25,"Karšto vandens temperatūros reguliavimas, atstatymas","Mano Būstas Klaipėda, UAB",LOCK_DOOR,4.0,m,35.0,8.75
+96,V25-0314214-6,Žardininkų g. 9,Šildymo sistemos vandens išleidimas,"Mano Būstas Klaipėda, UAB",PIPE_STACK,2.0,vnt,35.0,17.5
+97,V25-0314214,Alksnynės g. 15,"Šildymo vamzdynų sistemos techninės būklės įvertinimo ir patikrinimo darbai, išvadų pateikimas","Mano Būstas Klaipėda, UAB",PIPE_STACK,2.0,vnt,35.0,17.5
+98,V25-0338703,Alksnynės g. 9,Lempų keitimas bendro naudojimo patalpose,"Mano Būstas Klaipėda, UAB",LIGHT,3.0,m,52.5,17.5
+99,V25-0242621-3,Varpų g. 19,"Lauko šviestuvo, prožektoriaus keitimas","Mano Būstas Klaipėda, UAB",LIGHT,3.0,m,141.11,47.03666666666667
+100,V25-0315943-3,Šilutės pl. 42,Karšto ir cirkuliacinio vandens stovų ventilių su drenažiniais ventiliais ir cirkuliacinio siurblio keitimas,"Mano Būstas Klaipėda, UAB",PIPE_STACK,10.0,vnt,2021.64,202.16400000000002
+101,V25-0358169-3,Debreceno g. 46,Šildymo sistemos stovo ventilių keitimas su drenažinių ventilių keitimu,"Mano Būstas Klaipėda, UAB",PIPE_STACK,2.0,vnt,283.64,141.82
+102,V25-0358174,Debreceno g. 14,Avarijos priežasties (pobūdžio) nustatymo darbai šildymo sistemose,"Mano Būstas Klaipėda, UAB",PIPE_STACK,3.0,vnt,48.4,16.133333333333333
+103,V25-0358169,Vingio g. 15,"Šildymo vamzdynų sistemos techninės būklės įvertinimo ir patikrinimo darbai, išvadų pateikimas","Mano Būstas Klaipėda, UAB",PIPE_STACK,2.0,vnt,35.0,17.5
+104,V25-0413505-5,Reikjaviko g. 14,Vandens sistemos patikra,"Mano Būstas Klaipėda, UAB",LIGHT,3.0,m,35.0,11.666666666666666
+105,V25-0256836-2,Smiltelės g. 9,Šildymo sistemos stovo ventilių keitimas su drenažinių ventilių keitimu (skersmuo - iki 40 mm.),"Mano Būstas Klaipėda, UAB",PIPE_STACK,12.0,vnt,52.5,4.375
+106,V25-0292749-3,Vingio g. 15,"Šildymo sistemos remonto darbai ties 43-iu butu, 3-ia laiptinė","Mano Būstas Klaipėda, UAB",RADIATOR,3.0,vnt,52.5,17.5
+107,V25-0358169-3,Debreceno g. 46,Šildymo sistemos stovo ventilių keitimas su drenažinių ventilių keitimu,"Mano Būstas Klaipėda, UAB",PIPE_STACK,2.0,vnt,426.64,213.32
+108,V25-0368277-3,Baltijos pr. 91,Nuotekų vamzdyno atkarpos keitimas rūsyje,"Mano Būstas Klaipėda, UAB",SEWER,4.0,m,419.55,104.8875
+109,V25-0413505,I. Simonaitytės g. 23,"Karšto vandens temperatūros reguliavimas, atstatymas","Mano Būstas Klaipėda, UAB",LIGHT,3.0,m,35.0,11.666666666666666
+110,V25-0367566,J. Karoso g. 20,"Šildymo sistemos vamzdyno remontas, vamzdyno patikra su vaizdo kamera, vamzdyno valymas","Noske, UAB_21",PIPE_STACK,1.5,m,2994.72,1996.4799999999998
+111,V25-0285213-8,Žalgirio g. 1,Šildymo sistemos vamzdyno keitimo darbai,"Noske, UAB_21",SEWER,2.0,vnt,858.19,429.095
+112,V25-0367566,J. Karoso g. 20,"Šildymo sistemos vamzdyno remontas, vamzdyno patikra su vaizdo kamera, vamzdyno valymas","Noske, UAB_21",PIPE_STACK,1.5,m,2994.72,1996.4799999999998
+113,V25-0388547-1,"Turgaus a.   17, Klaipėda",Lietlovių valymas,"Dapreka, MB_21",PIPE,1.0,m,644.63,644.63
+114,V25-0393996,S. Daukanto g. 27,Lietlovių valymas,"Dapreka, MB_21",PIPE,1.0,m,347.11,347.11
+115,V23-0506069-24,Poilsio g. 12,"Išorinių sienų tarpblokinių siūlių remontas, blokų impregnavimas",Alpinus LT UAB_21,FACADE_SEAM,3.0,m,1600.83,533.61
+116,V23-0506069-24,Poilsio g. 12,"Išorinių sienų tarpblokinių siūlių remontas, blokų impregnavimas",Alpinus LT UAB_21,FACADE_SEAM,3.0,m,3099.17,1033.0566666666666
+117,V25-0094663-1,I. Simonaitytės g. 32,"Karšto vandens stovo atkarpos ir uždaromosios armatūros keitimas, 2-a laiptinė","Noske, UAB_21",PIPE_STACK,1.0,m,403.0,403.0
+118,V25-0021710-1,Debreceno g. 92,"Karšto šalto vandens, cirkuliacinio ir nuotekų stovų keitimas","Noske, UAB_21",SEWER,3.0,m,886.36,295.4533333333333
+119,V25-0031095-5,Debreceno g. 82,Šalto ir karšto vandens vamzdynų keitimas atidengiant vamzdynus   sienose (skersmuo iki 80 mm.),"Noske, UAB_21",SEWER,4.0,vnt,395.91,98.9775
+120,V25-0046745-5,Reikjaviko g. 6,Karšto ir cirkuliacinio vandens stovų keitimas,"Noske, UAB_21",PIPE_STACK,2.0,vnt,484.54,242.27
+121,V25-0021710-1,Debreceno g. 92,"Karšto šalto vandens, cirkuliacinio ir nuotekų stovų keitimas","Noske, UAB_21",SEWER,3.0,m,886.36,295.4533333333333
+122,V25-0044392-3,Šilutės pl. 88,"Bendro naudojimo nuotekų vamzdyno atkarpos keitimas atidengiant vamzdyną grindyse, rūsyje","Noske, UAB_21",SEWER,2.0,m,1063.63,531.815
+123,V25-0031095-7,Debreceno g. 82,Šalto ir karšto vandens ventilių keitimas bute,"Noske, UAB_21",SEWER,4.0,vnt,220.25,55.0625
+124,V25-0034999-6,Reikjaviko g. 11,"Stovų ventilių keitimas, 2 vnt","Noske, UAB_21",PIPE_STACK,2.0,vnt,209.51,104.755
+125,V24-0080593-10,Baltijos pr. 81,"Elektromagnetinių raktų gamyba, 15 vnt","Digitalas, UAB_21",LIGHT,15.0,vnt,61.98,4.132
+126,V25-0003518-15,Varpų g. 21,Lietaus nuotekų vamzdynų keitimas,"Daivilė, UAB_21",SEWER,6.0,vnt,1500.0,250.0
+127,V25-0003518-15,Varpų g. 21,Lietaus nuotekų vamzdynų keitimas,"Daivilė, UAB_21",SEWER,6.0,vnt,1288.5,214.75
+128,V23-0561663-20,I. Simonaitytės g. 1,Stogo remonto darbai,Bituminiai stogai​ UAB_21,ROOF,30.0,m,1950.0,65.0
+129,V25-0044392-1,Šilutės pl. 88,Avariniai nuotekų vamzdynų sistemų darbai,"Biostera, MB_21",SEWER,2.0,m,156.0,78.0
+130,V24-0478495-5,Žardininkų g. 8,Vamzdyno remontas CIPP Lining metodu,"Biostera, MB_21",PIPE,1.5,m,578.51,385.67333333333335
+131,V25-0096495-1,Debreceno g. 72,"Šildymo sistemos vamzdyno keitimas, izoliavimas","Mano Būstas Klaipėda, UAB",PIPE,2.5,m,207.06,82.824
+132,V25-0004470,Taikos pr. 71,Šilumos punkte nuorinimo ventilio montavimas,"Mano Būstas Klaipėda, UAB",PIPE,1.5,m,317.89,211.92666666666665
+133,V25-0039587,Reikjaviko g. 15,"Lempų keitimas bendro naudojimo patalpose, 2 vnt","Mano Būstas Klaipėda, UAB",LIGHT,2.0,vnt,16.51,8.255
+134,V25-0046745,Reikjaviko g. 14,"Karšto vandens vamzdynų sistemos būklės įvertinimas, išvadų pateikimas","Mano Būstas Klaipėda, UAB",PIPE_STACK,2.0,vnt,35.0,17.5
+135,V25-0002648,Pietinė g. 13,Judesio daviklio keitimas 2-os laiptinės 1-ame aukšte,"Mano Būstas Klaipėda, UAB",LIGHT,3.0,m,50.58,16.86
+136,V25-0092380-3,Žardininkų g. 8,"Lempų keitimas bendro naudojimo patalpose, 6 vnt","Mano Būstas Klaipėda, UAB",LIGHT,6.0,vnt,49.56,8.26
+137,V25-0073508,Žardininkų g. 21,"Judesio daviklio ir lemputės keitimas, 3-ia laiptinė","Mano Būstas Klaipėda, UAB",LIGHT,3.0,m,58.84,19.613333333333333
+138,V25-0029892,Baltijos pr. 69,"Lempų keitimas bendro naudojimo patalpose, 18 vnt","Mano Būstas Klaipėda, UAB",LIGHT,18.0,vnt,148.68,8.26
+139,V25-0073508,Žardininkų g. 21,"Judesio daviklio ir lemputės keitimas, 3-ia laiptinė","Mano Būstas Klaipėda, UAB",LIGHT,3.0,m,58.84,19.613333333333333
+140,V25-0002648,Pietinė g. 13,Judesio daviklio keitimas 2-os laiptinės 1-ame aukšte,"Mano Būstas Klaipėda, UAB",LIGHT,3.0,m,50.58,16.86
+141,V25-0000034,Vingio g. 15,"Elektros instaliacijos defektų nustatymo darbai, lempučių 2 vnt keitimas","Mano Būstas Klaipėda, UAB",PIPE_STACK,2.0,vnt,51.51,25.755
+142,V25-0025810,Alksnynės g. 6A,Judesio daviklio keitimas 2-os laiptinės 2-ame aukšte,"Mano Būstas Klaipėda, UAB",LIGHT,3.0,m,51.66,17.22
+143,V25-0034009,Debreceno g. 34,"Lempų keitimas bendro naudojimo patalpose, 2 vnt","Mano Būstas Klaipėda, UAB",LIGHT,3.0,m,16.51,5.503333333333334
+144,V25-0067814,Statybininkų pr. 33,Lemputės keitimas bendro naudojimo patalpose,"Mano Būstas Klaipėda, UAB",LIGHT,3.0,m,52.5,17.5
+145,V25-0077866,Taikos pr. 86,Šviestuvo su judesio davikliu keitimas 1-os laiptinės 3-iame aukšte,"Mano Būstas Klaipėda, UAB",LIGHT,3.0,m,55.49,18.496666666666666
+146,V25-0062239,Žardininkų g. 3,Judesio daviklio keitimas 1-os laiptinės 4-ame aukšte,"Mano Būstas Klaipėda, UAB",PIPE_STACK,2.0,m,51.78,25.89
+147,V25-0000034,Vingio g. 15,"Elektros instaliacijos defektų nustatymo darbai, lempučių 2 vnt keitimas","Mano Būstas Klaipėda, UAB",PIPE_STACK,2.0,vnt,51.51,25.755
+148,V25-0010601-1,Baltijos pr. 5,"Lempų keitimas bendro naudojimo patalpose, 5 vnt","Mano Būstas Klaipėda, UAB",LIGHT,5.0,vnt,41.28,8.256
+149,V25-0034009,Debreceno g. 34,"Lempų keitimas bendro naudojimo patalpose, 2 vnt","Mano Būstas Klaipėda, UAB",LIGHT,3.0,m,16.51,5.503333333333334
+150,V25-0077866,Taikos pr. 86,Šviestuvo su judesio davikliu keitimas 1-os laiptinės 3-iame aukšte,"Mano Būstas Klaipėda, UAB",LIGHT,3.0,m,55.49,18.496666666666666
+151,V25-0075753-1,Baltijos pr. 69,"Lempų keitimas bendro naudojimo patalpose, 5 vnt","Mano Būstas Klaipėda, UAB",LIGHT,5.0,vnt,41.28,8.256
+152,V25-0110367,Debreceno g. 82,"Apšvietimo sistemos patikrinimas, automatinio jungiklio įjungimas, lemputės keitimas, 2-a laiptinė","Mano Būstas Klaipėda, UAB",LIGHT,2.0,vnt,54.1,27.05
+153,V25-0044392-1,Šilutės pl. 88,Avariniai nuotekų vamzdynų sistemų darbai,"Mano Būstas Klaipėda, UAB",SEWER,2.0,m,156.0,78.0
+154,V25-0075753-1,Baltijos pr. 69,"Lempų keitimas bendro naudojimo patalpose, 5 vnt","Mano Būstas Klaipėda, UAB",LIGHT,5.0,vnt,41.28,8.256
+155,V25-0045286,Pietinė g. 18,Šviestuvų Italia su judesio davikliu montavimas arba keitimas,"Mano Būstas Klaipėda, UAB",LIGHT,3.0,m,35.0,11.666666666666666
+156,V25-0099593-1,Pietinė g. 3,"Karšto vandens temperatūros reguliavimas, atstatymas","Mano Būstas Klaipėda, UAB",SEWER,24.0,m,35.0,1.4583333333333333
+157,V25-0045908-3,Kauno g. 15,Šildymo termoventilių reguliavimas 71 bute,"Mano Būstas Baltija, UAB",RADIATOR,2.0,vnt,85.8,42.9
+158,V25-0004376-2,Liepų g. 52,Nuotekų stovo keitimas (skersmuo 100 mm.),"Noske, UAB_21",SEWER,2.0,m,-257.02,-128.51
+159,V25-0062692,Minijos g. 130C,Šildymo vamzdyno izoliacijos keitimas,"Noske, UAB_21",PIPE,2.0,m,130.0,65.0
+160,V25-0043407-2,Kauno g. 23,"Bendro naudojimo karšto vandens cirkuliacinio stovo atkarpos keitimas, 1-a laiptinė","Noske, UAB_21",PIPE_STACK,1.0,vnt,235.18,235.18
+161,V25-0004376-2,Liepų g. 52,Nuotekų stovo keitimas (skersmuo 100 mm.),"Noske, UAB_21",SEWER,2.0,m,257.02,128.51
+162,V25-0004376-2,Liepų g. 52,Nuotekų stovo keitimas (skersmuo 100 mm.),"Noske, UAB_21",SEWER,2.0,m,257.02,128.51
+163,V25-0079922-1,Sulupės g. 18,Karšto vandens vamzdyno atkarpos keitimas rūsyje,"Noske, UAB_21",PIPE,1.0,vnt,319.09,319.09
+164,V25-0004376-2,Liepų g. 52,Nuotekų stovo keitimas (skersmuo 100 mm.),"Noske, UAB_21",SEWER,2.0,m,257.02,128.51
+165,V25-0000315-6,Darželio g. 8,"Nuotekų vamzdyno jungčių remontas, rūsio valymas","Noske, UAB_21",SEWER,12.0,m,59.09,4.924166666666667
+166,V25-0043407-2,Kauno g. 23,"Bendro naudojimo karšto vandens cirkuliacinio stovo atkarpos keitimas, 1-a laiptinė","Noske, UAB_21",PIPE_STACK,1.0,vnt,235.18,235.18
+167,V25-0017109-10,Poilsio g. 16,Išorinių sienų tarpblokinių siūlių remontas,"Mano Būstas Baltija, UAB",FACADE_SEAM,7.0,m,380.0,54.285714285714285
+168,V25-0005671-7,Minijos g. 157,Fasado atskirų vietų remontas,MB Komandax #PRO_21,PIPE_STACK,4.0,m,145.95,36.4875
+169,V25-0005671-7,Minijos g. 157,Fasado atskirų vietų remontas,MB Komandax #PRO_21,PIPE_STACK,4.0,m,145.95,36.4875
+170,V25-0022753-4,Poilsio g. 12,Balkono valymas,"Komandax, MB_21",PIPE,2.0,m2,238.0,119.0
+171,V25-0065401,Minijos g. 131,"Pavienių čerpių keitimas, montavimas, kraiginių čerpių tvirtinimas cementiniu mišiniu","Mano Būstas Baltija, UAB",ROOF,6.0,vnt,200.7,33.449999999999996
+172,V25-0065401,Minijos g. 131,"Pavienių čerpių keitimas, montavimas, kraiginių čerpių tvirtinimas cementiniu mišiniu","Mano Būstas Baltija, UAB",ROOF,6.0,vnt,200.7,33.449999999999996
+173,V25-0070028-1,Žalgirio g. 3,Nuotekų stovo keitimas (skersmuo 100 mm.),"Ediminis, IĮ_0",SEWER,1.5,m,273.05,182.03333333333333
+174,V25-0051366-2,Minijos g. 139,Nuotekų vamzdynų diagnostika su vaizdo kamera,"Biostera, MB_21",SEWER,1.0,m,312.0,312.0
+175,V25-0051366-7,Minijos g. 139,Nuotekų  vamzdyno remontas CIPP metodu,"Biostera, MB_21",SEWER,1.0,m,788.19,788.19
+176,V25-0020257-1,Nidos g. 54,Išorinių sienų tarpblokinių siūlių remontas,"Aukštuminių darbų projektai, MB_21",FACADE_SEAM,9.0,m,214.5,23.833333333333332
+177,V25-0102630,Vanagupės g.24,"Skaitiklių nurašymas, 186 vnt","Mano Būstas Baltija, UAB",LIGHT,186.0,vnt,128.53,0.6910215053763441
+178,V25-0102627,Vanagupės g.22,"Skaitiklių nurašymas, 186 vnt","Mano Būstas Baltija, UAB",LIGHT,186.0,vnt,128.53,0.6910215053763441
+179,V25-0102623,Daukanto g.10A,"Skaitiklių nurašymas, 28 vnt","Mano Būstas Baltija, UAB",LIGHT,28.0,vnt,19.35,0.6910714285714287
+180,V25-0042670,Sausio 15-osios g. 18,Judesio daviklio keitimas 1-os laiptinės 2-ame aukšte,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,50.58,16.86
+181,V25-0002938-1,Šilutės pl. 12,"Spynos montavimas ant grotų, vedančių ant stogo","Mano Būstas Baltija, UAB",ROOF,2.0,m,41.99,20.995
+182,V25-0040116,Nidos g. 46,Judesio daviklio ir lemputės keitimas 4-os laiptinės tambūre,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,60.04,20.013333333333332
+183,V25-0013284,Minijos g. 130B,Elektros sistemų remonto darbai,"Mano Būstas Baltija, UAB",LIGHT,2.0,vnt,35.0,17.5
+184,V25-0021492-2,Poilsio g. 20,Lempų keitimas bendro naudojimo patalpose,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,35.0,11.666666666666666
+185,V25-0040116,Nidos g. 46,Judesio daviklio ir lemputės keitimas 4-os laiptinės tambūre,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,60.04,20.013333333333332
+186,V25-0051366-2,Minijos g. 139,Nuotekų vamzdynų diagnostika su vaizdo kamera,"Mano Būstas Baltija, UAB",SEWER,1.0,m,312.0,312.0
+187,V25-0073062,Nidos g. 40,"Lempų keitimas bendro naudojimo patalpose, 3 vnt","Mano Būstas Baltija, UAB",LIGHT,3.0,m,24.77,8.256666666666666
+188,V25-0123932,Sausio 15-osios g. 24,"Lempų keitimas bendro naudojimo patalpose, 2 vnt","Mano Būstas Baltija, UAB",LIGHT,3.0,m,16.51,5.503333333333334
+189,V25-0070799,Kauno g. 15,Lemputės keitimas bendro naudojimo patalpose,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,35.0,11.666666666666666
+190,V25-0024414,Nidos g. 74,"Lempų keitimas bendro naudojimo patalpose, 3 vnt","Mano Būstas Baltija, UAB",LIGHT,3.0,vnt,24.77,8.256666666666666
+191,V25-0004753-2,Danės g. 23,"Lempų keitimas bendro naudojimo patalpose, 2 vnt","Mano Būstas Baltija, UAB",LIGHT,2.0,vnt,16.51,8.255
+192,V25-0003870,Nidos g. 40C,Lempų keitimas bendro naudojimo patalpose,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,8.26,2.7533333333333334
+193,V25-0020956-2,Rambyno g. 7,Lauko prožektoriaus keitimas,"Mano Būstas Baltija, UAB",ROOF,3.0,m,127.5,42.5
+194,V25-0042514,Darželio g. 6,"Apšvietimo remonto darbai, lemputės keitimas","Mano Būstas Baltija, UAB",LIGHT,3.0,m,43.26,14.42
+195,V25-0012560,Naikupės g. 19,Lempų keitimas bendro naudojimo patalpose,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,35.0,11.666666666666666
+196,V25-0000669-2,S. Daukanto g. 33,"Lempų keitimas bendro naudojimo patalpose, 2 vnt","Mano Būstas Baltija, UAB",LIGHT,3.0,m,16.51,5.503333333333334
+197,V25-0045782,J. Karoso g. 20,"Lempų keitimas bendro naudojimo patalpose, 8 vnt","Mano Būstas Baltija, UAB",LIGHT,8.0,vnt,66.08,8.26
+198,V25-0000669-2,S. Daukanto g. 33,"Lempų keitimas bendro naudojimo patalpose, 2 vnt","Mano Būstas Baltija, UAB",LIGHT,3.0,m,16.51,5.503333333333334
+199,V25-0042514,Darželio g. 6,"Apšvietimo remonto darbai, lemputės keitimas","Mano Būstas Baltija, UAB",LIGHT,3.0,m,43.26,14.42
+200,V25-0011417,Sulupės g. 10A,"Laiptinės apšvietimo patikrinimas, lempų 3 vnt keitimas","Mano Būstas Baltija, UAB",LIGHT,3.0,vnt,51.66,17.22
+201,V24-0483206,Kuosų g. 20,"Elektros skaitiklių keitimas, 3 vnt","Mano Būstas Baltija, UAB",LIGHT,3.0,vnt,519.28,173.09333333333333
+202,V25-0070028-1,Žalgirio g. 3,Nuotekų stovo keitimas (skersmuo 100 mm.),"Mano Būstas Baltija, UAB",SEWER,1.5,m,273.05,182.03333333333333
+203,V25-0002938-1,Šilutės pl. 12,"Spynos montavimas ant grotų, vedančių ant stogo","Mano Būstas Baltija, UAB",ROOF,2.0,m,41.99,20.995
+204,V25-0073062,Nidos g. 40,"Lempų keitimas bendro naudojimo patalpose, 3 vnt","Mano Būstas Baltija, UAB",LIGHT,3.0,m,24.77,8.256666666666666
+205,V25-0045782,J. Karoso g. 20,"Lempų keitimas bendro naudojimo patalpose, 8 vnt","Mano Būstas Baltija, UAB",LIGHT,8.0,vnt,66.08,8.26
+206,V25-0230754-1,Baltijos pr. 107,Karšto vandens stovo atkarpos keitimas,"Mano Būstas Baltija, UAB",PIPE_STACK,0.5,m,182.14,364.28
+207,V25-0107259-1,Kauno g. 23,"Karšto vandens cirkuliacinio stovo atkarpos keitimas, 1-a laiptinė","Noske, UAB_21",PIPE_STACK,3.0,m,295.45,98.48333333333333
+208,V25-0135457-1,Minijos g. 130C,Karšto vandens kevalinės izoliacijos keitimas rūsyje,"Noske, UAB_21",PIPE_STACK,26.0,m,532.23,20.470384615384617
+209,V25-0172300-6,Naikupės g. 19,"Šalto, karšto vandens vamzdyno remontas","Noske, UAB_21",SEWER,6.0,m,850.91,141.81833333333333
+210,V25-0135457-7,Minijos g. 130C,Karšto vandens vamzdžio keitimas rūsyje,"Noske, UAB_21",PIPE_STACK,26.0,m,738.64,28.409230769230767
+211,V25-0135457-7,Minijos g. 130C,Karšto vandens vamzdžio keitimas rūsyje,"Noske, UAB_21",PIPE_STACK,26.0,m,738.64,28.409230769230767
+212,V25-0070144-7,Turgaus g. 20,Karšto vandens magistralinio vamzdyno atkarpos keitimas rūsyje,"Noske, UAB_21",SEWER,10.0,m,354.55,35.455
+213,V25-0172300-1,Naikupės g. 19,Šildymo sistemos trieigio vožtuvo ir vamzdyno atkarpų keitimas ties 51-u butu,"Noske, UAB_21",SEWER,6.0,m,260.0,43.333333333333336
+214,V25-0135457-1,Minijos g. 130C,Karšto vandens kevalinės izoliacijos keitimas rūsyje,"Noske, UAB_21",PIPE_STACK,26.0,m,532.23,20.470384615384617
+215,V25-0141879-13,S. Daukanto g. 2,Šalto vandens magistralinio vamzdyno keitimas,"Noske, UAB_21",SEWER,4.0,m,1952.48,488.12
+216,V25-0141879-4,S. Daukanto g. 2,Šalto vandens vamzdyno remontinės apkabos sumontavimas rūsyje,"Noske, UAB_21",SEWER,4.0,m,57.46,14.365
+217,V24-0459940-8,Daukanto g.10A,Lubų plokščių keitimas parkavimo vietose,"Komandax, MB_21",FACADE_SEAM,2.9,m,715.0,246.55172413793105
+218,V25-0232532-3,S. Daukanto g. 27,Pavienių čerpių keitimas iki 1m2,"Mano Būstas Baltija, UAB",ROOF,1.0,m2,357.5,357.5
+219,V25-0144845-7,M. Mažvydo al. 9,Stogo latakų keitimas,"Mano Būstas Baltija, UAB",PIPE,18.0,m,529.0,29.38888888888889
+220,V25-0144845-4,M. Mažvydo al. 9,"Latakų remontas, sandarinimas","Mano Būstas Baltija, UAB",PIPE,18.0,m,178.75,9.930555555555555
+221,V25-0189389-3,Gintaro g. 33,Nuotekų vamzdynų plovimas ir diagnostika su vaizdo kamera,"Biostera, MB_21",SEWER,2.0,m,239.4,119.7
+222,V25-0002938-9,Šilutės pl. 12,"Fasado remonto darbai, spyglių nuo paukščių įrengimas","Aukštuminių darbų projektai, MB_21",ROOF,2.0,m,2102.0,1051.0
+223,V25-0204934,Mėguvos g. 9,"Skaitiklių nurašymas, 1 vnt","Mano Būstas Baltija, UAB",LIGHT,1.0,vnt,0.69,0.69
+224,V25-0204930,Vanagupės g.24,"Skaitiklių nurašymas, 186 vnt","Mano Būstas Baltija, UAB",LIGHT,186.0,vnt,127.95,0.6879032258064516
+225,V25-0204932,Vanagupės g. 38,"Skaitiklių nurašymas, 70 vnt","Mano Būstas Baltija, UAB",LIGHT,70.0,vnt,48.15,0.6878571428571428
+226,V25-0204927,Vanagupės g.22,Skaitiklių nurašymas 186 vnt,"Mano Būstas Baltija, UAB",LIGHT,186.0,vnt,127.95,0.6879032258064516
+227,V25-0155150-3,Kauno g. 41,Šildymo sistemos stovo ventilio ir išleidėjo keitimas,"Mano Būstas Baltija, UAB",PIPE_STACK,1.0,vnt,162.3,162.3
+228,V25-0226071-1,Ganyklų g. 8C,Foto relės keitimas,"Mano Būstas Baltija, UAB",LIGHT,2.0,vnt,102.24,51.12
+229,V25-0123932,Sausio 15-osios g. 24,"Lempų keitimas bendro naudojimo patalpose, 2 vnt","Mano Būstas Baltija, UAB",LIGHT,3.0,m,16.51,5.503333333333334
+230,V25-0190617-2,Prieplaukos g. 14E,"Vartų spynos keitimas, Prieplaukos 14, 14A, 14B, 14C,14D,14E,14F,14G,14H,14J,14K,14L,14M,14N,14P,14R","Mano Būstas Baltija, UAB",PIPE_STACK,14.0,m,86.53,6.180714285714286
+231,V25-0206476,Sulupės g. 20,Judesio daviklio keitimas,"Mano Būstas Baltija, UAB",PIPE_STACK,3.0,m,50.58,16.86
+232,V25-0200558,Kauno g. 3,Lempų keitimas bendro naudojimo patalpose,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,35.0,11.666666666666666
+233,V25-0144296-2,Sausio 15-osios g. 24,"Lempų keitimas bendro naudojimo patalpose, 2 vnt","Mano Būstas Baltija, UAB",LIGHT,2.0,vnt,16.51,8.255
+234,V25-0221857,Minijos g. 126,Šviestuvo su judesio davikliu keitimas prie 3-ios laiptinės įėjimo,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,63.55,21.183333333333334
+235,V25-0073062-2,Nidos g. 40,Judesio daviklių reguliavimas,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,40.0,13.333333333333334
+236,V25-0172300-1,Didžioji Vandens g. 14,Šildymo sistemos trieigio vožtuvo ir vamzdyno atkarpų keitimas ties 51-u butu,"Mano Būstas Baltija, UAB",SEWER,6.0,m,1.99,0.33166666666666667
+237,V25-0208113,Minijos g. 131,Šviestuvų Italia su judesio davikliu montavimas arba keitimas,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,55.49,18.496666666666666
+238,V25-0178125-2,Žalgirio g. 5,"Lempų keitimas bendro naudojimo patalpose, 3 vnt","Mano Būstas Baltija, UAB",LIGHT,3.0,vnt,24.78,8.26
+239,V25-0073062-1,Nidos g. 40,Judesio daviklio ir lemputės keitimas. 5 laiptinė,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,58.84,19.613333333333333
+240,V25-0208113,Minijos g. 131,Šviestuvų Italia su judesio davikliu montavimas arba keitimas,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,55.49,18.496666666666666
+241,V25-0189389,Poilsio g. 43,Avariniai nuotekų tinklų vamzdynų valymo darbai bendro naudojimo vamzdynuose,"Mano Būstas Baltija, UAB",SEWER,2.0,m,52.5,26.25
+242,V25-0172300-6,Naikupės g. 19,"Šalto, karšto vandens vamzdyno remontas","Mano Būstas Baltija, UAB",SEWER,6.0,m,850.91,141.81833333333333
+243,V25-0155150-3,Kauno g. 41,Šildymo sistemos stovo ventilio ir išleidėjo keitimas,"Mano Būstas Baltija, UAB",PIPE_STACK,1.0,vnt,162.3,162.3
+244,V25-0192590-2,Nidos g. 48,Šilumos punkto valdiklio keitimas,"Mano Būstas Baltija, UAB",LIGHT,5.0,vnt,507.73,101.546
+245,V25-0238305,Darželio g. 6,Lempų keitimas bendro naudojimo patalpose,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,8.26,2.7533333333333334
+246,V25-0206476,Sulupės g. 20,Judesio daviklio keitimas,"Mano Būstas Baltija, UAB",PIPE_STACK,3.0,m,50.58,16.86
+247,V25-0150154-2,Kauno g. 39A,"Lempų keitimas bendro naudojimo patalpose, 2 vnt","Mano Būstas Baltija, UAB",LIGHT,2.0,vnt,16.51,8.255
+248,V25-0150154-2,Kauno g. 39A,"Lempų keitimas bendro naudojimo patalpose, 2 vnt","Mano Būstas Baltija, UAB",LIGHT,2.0,vnt,16.51,8.255
+249,V25-0144296-2,Sausio 15-osios g. 24,"Lempų keitimas bendro naudojimo patalpose, 2 vnt","Mano Būstas Baltija, UAB",LIGHT,2.0,vnt,16.51,8.255
+250,V25-0060084-16,Ramioji g. 10,Balsavimo biuletenių surinkimas,"Mano Būstas Baltija, UAB",LOCK_DOOR,1.0,m,35.0,35.0
+251,V25-0073062-1,Nidos g. 40,Judesio daviklio ir lemputės keitimas. 5 laiptinė,"Mano Būstas Baltija, UAB",LIGHT,3.0,m,58.84,19.613333333333333
+252,V25-0060084-12,Ramioji g. 10,Administratoriaus pašto dėžutės pakabinimas,"Mano Būstas Baltija, UAB",LOCK_DOOR,1.0,m,42.94,42.94
+253,V25-0075473-6,Kauno g. 23A,"Informacinių lentelių (rūkyti draudžiama) pakabinimas, 4 vnt","Mano Būstas Baltija, UAB",LOCK_DOOR,4.0,vnt,44.96,11.24
+254,V25-0195046-1,Baltijos pr. 69,Karšto vandens ventilio keitimas su drenažinių ventilių keitimu (skersmuo - iki 40 mm.),"Noske, UAB_21",PIPE_STACK,1.0,vnt,177.27,177.27
+255,V25-0094725-1,Reikjaviko g. 15,Karšto vandens magistralės keitimas (skersmuo iki 63 mm.),"Noske, UAB_21",PIPE,2.0,m,384.1,192.05
+256,V25-0090052-1,Taikos pr. 83,Karšto vandens ir nuotekų vamzdyno remontas,"Noske, UAB_21",SEWER,2.0,m,295.0,147.5
+257,V25-0271399-2,Debreceno g. 20,Šildymo sistemos trieigio vožtuvo ir vamzdyno atkarpų keitimas ties 28-u butu,"Noske, UAB_21",PIPE,1.0,vnt,374.18,374.18
+258,V25-0111699-1,Alksnynės g. 7,Kanalizacijos vamzdyno remonto darbai,"Noske, UAB_21",SEWER,16.0,m,235.0,14.6875
+259,V25-0099593-3,Baltijos pr. 95,"Bendro naudojimo karšto, cirkuliacinio vandens ir nuotekų stovų atkarpų keitimas, 4-a laiptinė","Noske, UAB_21",SEWER,24.0,m,567.28,23.636666666666667
+260,V25-0146397-3,Taikos pr. 127,Šildymo vamzdyno su ventiliais ir drenažiniais ventiliais keitimas,"Noske, UAB_21",PIPE,1.5,m,454.55,303.03333333333336
+261,V25-0193356-5,Baltijos pr. 59,Karšto vandens ir cirkuliacinio stovų ventilių keitimas (skersmuo iki 40 mm.),"Noske, UAB_21",PIPE_STACK,3.0,vnt,249.91,83.30333333333333
+262,V25-0140035-3,Reikjaviko g. 14,"Šalto, karšto ir cirkuliacinio vandens stovų ventilių keitimas išnešant į bendro naudojimo patalpas","Noske, UAB_21",PIPE_STACK,3.0,vnt,660.63,220.21
+263,V25-0080967-3,Smiltelės g. 9,Lietaus nuotekų stovo remontas,"Noske, UAB_21",FACADE_SEAM,1.5,m,531.0,354.0
+264,V25-0257288-2,Baltijos pr. 83,"Šildymo sistemos vamzdyno remontas, trieigio ventilio keitimas","Noske, UAB_21",PIPE,1.0,vnt,310.79,310.79
+265,V25-0099593-10,Baltijos pr. 95,Nuotekų stovo keitimas,"Noske, UAB_21",SEWER,24.0,m,437.28,18.22
+266,V25-0120477-6,Debreceno g. 14,Nuotekų  vamzdyno keitimas atidengiant vamzdynus  sienose (skersmuo iki 110 mm.),"Noske, UAB_21",SEWER,3.0,m,322.64,107.54666666666667
+267,V25-0099593-14,Baltijos pr. 95,Bendro naudojimo karšto ir cirkuliacinio vandens vamzdynų keitimas rūsyje,"Noske, UAB_21",SEWER,24.0,m,1223.14,50.96416666666667
+268,V25-0184712-6,Debreceno g. 14,"medžių ir krūmų genėjimas, utilizavimas","Mano Būstas Klaipėda, UAB",LOCK_DOOR,1.0,vnt,207.0,207.0
+269,V25-0217903-7,Debreceno g. 60,Sutapdinto stogo dangos atskirų vietų remonto darbai (iki 10m2),"Komandax, MB_21",ROOF,10.0,m2,286.0,28.6
+270,V25-0143881,I. Simonaitytės g. 32,Nuotekų sistemos vamzdyno diagnostika su vaizdo kamera,"Biostera, MB_21",SEWER,3.0,vnt,638.4,212.79999999999998
+271,V25-0143809-1,Debreceno g. 56,Nuotekų sistemos vamzdyno diagnostika su vaizdo kamera,"Biostera, MB_21",SEWER,2.0,vnt,1158.66,579.33
+272,V25-0143903-1,Taikos pr. 129,Nuotekų vamzdyno  diagnostika su vaizdo kamera,"Biostera, MB_21",SEWER,3.0,vnt,558.6,186.20000000000002
+273,V25-0207382-1,Reikjaviko g. 13,Karšto vandens magistralinio vamzdyno ir atšakos į stovą atkarpų keitimas rūsyje,"Mano Būstas Klaipėda, UAB",PIPE_STACK,3.0,m,731.25,243.75
+274,V25-0201917-7,Pietinė g. 17,Karšto vandens drenažinių ventilių keitimas,"Mano Būstas Klaipėda, UAB",PIPE_STACK,2.0,vnt,267.7,133.85
+275,V25-0096495-1,Debreceno g. 72,"Šildymo sistemos vamzdyno keitimas, izoliavimas","Mano Būstas Klaipėda, UAB",PIPE,2.5,m,207.06,82.824
+276,V25-0150770,Baltijos pr. 81,"Elektros tiekimo atnaujinimas, lempų keitimas rūsyje","Mano Būstas Klaipėda, UAB",LIGHT,2.0,vnt,59.78,29.89
+277,V25-0224887,Žardininkų g. 15,Avarijų nustatymo darbai nuotekų sistemose,"Mano Būstas Klaipėda, UAB",SEWER,4.0,m,48.4,12.1
+278,V25-0006423,Alksnynės g. 8,Avariniai nuotekų tinklų vamzdynų valymo darbai bendro naudojimo vamzdynuose,"Mano Būstas Klaipėda, UAB",SEWER,16.0,m,90.4,5.65
+279,V25-0201917-7,Debreceno g. 32,Karšto vandens drenažinių ventilių keitimas,"Mano Būstas Klaipėda, UAB",PIPE_STACK,2.0,vnt,52.5,26.25
+280,V25-0208376,Smiltelės g. 47,"Lempų keitimas bendro naudojimo patalpose, 2 vnt","Mano Būstas Klaipėda, UAB",PIPE_STACK,2.0,vnt,16.52,8.26
+281,V25-0248265,Debreceno g. 66,Lempų keitimas bendro naudojimo patalpose,"Mano Būstas Klaipėda, UAB",LIGHT,3.0,m,8.26,2.7533333333333334
+282,V25-0142949-1,Žardininkų g. 17,"Šildymo vamzdynų sistemos techninės būklės įvertinimo ir patikrinimo darbai, išvadų pateikimas","Mano Būstas Klaipėda, UAB",PIPE_STACK,1.5,m,35.0,23.333333333333332
+283,V25-0162917-2,Baltijos pr. 23,"Judesio daviklio, lempų keitimas","Mano Būstas Klaipėda, UAB",LIGHT,3.0,m,67.1,22.366666666666664
+284,V25-0021710,Vingio g. 15,Avarijų nustatymo ir lokalizavimo darbai nuotekų sistemose,"Mano Būstas Klaipėda, UAB",SEWER,3.0,m,35.0,11.666666666666666
+285,V25-0196304,Žardininkų g. 4,"Šildymo vamzdynų sistemos techninės būklės įvertinimo ir patikrinimo darbai, išvadų pateikimas","Mano Būstas Klaipėda, UAB",PIPE,3.0,vnt,35.0,11.666666666666666
+286,V25-0080967-3,Žardininkų g. 1,Lietaus nuotekų stovo remontas,"Mano Būstas Klaipėda, UAB",FACADE_SEAM,1.5,m,35.0,23.333333333333332
+287,V25-0193356-5,Baltijos pr. 59,Karšto vandens ir cirkuliacinio stovų ventilių keitimas (skersmuo iki 40 mm.),"Mano Būstas Klaipėda, UAB",PIPE_STACK,3.0,vnt,249.91,83.30333333333333
+288,V25-0162568-1,Taikos pr. 118A,Šviestuvo keitimas parkinge,"Mano Būstas Klaipėda, UAB",LIGHT,3.0,m,62.95,20.983333333333334
+289,V25-0164870-2,Debreceno g. 82,"Lempų keitimas bendro naudojimo patalpose, 8 vnt","Mano Būstas Klaipėda, UAB",LIGHT,8.0,vnt,66.05,8.25625
+290,V25-0150770,Baltijos pr. 81,"Elektros tiekimo atnaujinimas, lempų keitimas rūsyje","Mano Būstas Klaipėda, UAB",LIGHT,2.0,vnt,59.78,29.89
+291,V25-0110367,Debreceno g. 82,"Apšvietimo sistemos patikrinimas, automatinio jungiklio įjungimas, lemputės keitimas, 2-a laiptinė","Mano Būstas Klaipėda, UAB",LIGHT,2.0,vnt,54.1,27.05
+292,V25-0149740-11,Baltijos pr. 35,65-o buto pašto dėžutės spynelės reguliavimas,"Mano Būstas Klaipėda, UAB",LOCK_DOOR,15.0,vnt,24.78,1.6520000000000001
+293,V25-0207382-2,Reikjaviko g. 13,Avarinis vandens tiekimo išjungimas namui,"Mano Būstas Klaipėda, UAB",PIPE,3.0,m,52.9,17.633333333333333
+294,V25-0208376,Smiltelės g. 47,"Lempų keitimas bendro naudojimo patalpose, 2 vnt","Mano Būstas Klaipėda, UAB",PIPE_STACK,2.0,vnt,16.52,8.26
+295,V25-0164870-2,Debreceno g. 82,"Lempų keitimas bendro naudojimo patalpose, 8 vnt","Mano Būstas Klaipėda, UAB",LIGHT,8.0,vnt,66.05,8.25625
+296,V25-0135547,I. Simonaitytės g. 32,Atvykimas dėl raktų gamybos nuo techninės patalpos,"Mano Būstas Klaipėda, UAB",LOCK_DOOR,2.0,vnt,17.5,8.75
+297,V25-0207382,Reikjaviko g. 13,Avarinės tarnybos iškvietimo mokestis mieste,"Mano Būstas Klaipėda, UAB",PIPE,3.0,m,12.4,4.133333333333334
+298,V25-0195046-1,Baltijos pr. 69,Karšto vandens ventilio keitimas su drenažinių ventilių keitimu (skersmuo - iki 40 mm.),"Mano Būstas Klaipėda, UAB",PIPE_STACK,1.0,vnt,177.27,177.27
