@@ -1,12 +1,18 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import re
+
 import csv
+import re
+import json
+import os
+import math
+from collections import Counter
 
 app = FastAPI(title="Kainos asistentas API")
 
-# CORS (GitHub Pages UI)
+# ---------------- CORS ----------------
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["https://mindaugasbukauskas1996-ship-it.github.io"],
@@ -15,10 +21,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ---------- Load price table ----------
+# ---------------- Load price table ----------------
+
 PRICE = []
+
 with open("price_table.csv", newline="", encoding="utf-8") as f:
     reader = csv.DictReader(f)
+
     for r in reader:
         PRICE.append({
             "work_type": (r["work_type"] or "").upper().strip(),
@@ -28,147 +37,275 @@ with open("price_table.csv", newline="", encoding="utf-8") as f:
             "p75": float(r["p75"]),
         })
 
-# ---------- Helpers ----------
-def detect_work_type(text: str) -> str:
+
+# ---------------- Load ML model ----------------
+
+MODEL = None
+MODEL_PATH = "cluster_tfidf_model.json"
+
+if os.path.exists(MODEL_PATH):
+    with open(MODEL_PATH, "r", encoding="utf-8") as f:
+        MODEL = json.load(f)
+
+
+# ---------------- Tokenization ----------------
+
+def tokenize_lt(text: str):
+
     t = (text or "").lower()
 
-    # Tarblokinės / tarpblokinių siūlių sandarinimas (fasadas) – visada m
-    if any(x in t for x in ["tarblokin", "tarpblok", "tarp blok"]):
-        return "FACADE_SEAM"
-    if any(x in t for x in ["siūl", "siuli", "siūlių", "siuliu"]) and any(x in t for x in ["fasad", "siena", "tarpblok", "tarblokin"]):
+    t = re.sub(r"[^0-9a-ząčęėįšųūž]+", " ", t)
+
+    toks = [x for x in t.split() if len(x) >= 2]
+
+    return toks
+
+
+# ---------------- ML cluster prediction ----------------
+
+def predict_cluster(text: str):
+
+    if not MODEL:
+        return None, None, []
+
+    idf = MODEL["idf"]
+
+    vocab = set(idf.keys())
+
+    toks = tokenize_lt(text)
+
+    tf = Counter([t for t in toks if t in vocab])
+
+    if not tf:
+        return None, None, []
+
+    vec = {}
+
+    norm2 = 0
+
+    for t, c in tf.items():
+
+        w = (1 + math.log(c)) * float(idf[t])
+
+        vec[t] = w
+
+        norm2 += w * w
+
+    norm = math.sqrt(norm2) if norm2 > 0 else 1
+
+    for t in list(vec.keys()):
+        vec[t] /= norm
+
+    scores = []
+
+    for cl, items in MODEL["centroids"].items():
+
+        s = 0
+
+        for tok, w in items:
+
+            if tok in vec:
+                s += vec[tok] * float(w)
+
+        scores.append((cl, s))
+
+    scores.sort(key=lambda x: x[1], reverse=True)
+
+    best = scores[0] if scores else (None, None)
+
+    top3 = scores[:3]
+
+    return best[0], best[1], top3
+
+
+# ---------------- Rule fallback ----------------
+
+def detect_work_type(text: str):
+
+    t = (text or "").lower()
+
+    if "tarblokin" in t or "tarpblok" in t:
         return "FACADE_SEAM"
 
-    # Nuotekos / kanalizacija
-    if any(x in t for x in ["nuotek", "kanaliz", "kanalizacij"]):
+    if "nuotek" in t or "kanaliz" in t:
         return "SEWER"
 
-    # Stovai (€/aukštas)
     if "stov" in t:
         return "PIPE_STACK"
 
-    # Vamzdžiai (€/m)
     if "vamzd" in t:
         return "PIPE"
 
-    # Stogas (m2)
-    if any(x in t for x in ["stog", "čerpi", "cerpi", "danga"]):
+    if "stog" in t or "čerpi" in t or "danga" in t:
         return "ROOF"
 
-    # Elektra / apšvietimas
-    if any(x in t for x in ["šviest", "lemput", "apsviet", "apšviet", "elektr"]):
+    if "šviest" in t or "lemput" in t:
         return "LIGHT"
 
-    # Radiatoriai
-    if any(x in t for x in ["radiator", "nuorin"]):
+    if "radiator" in t:
         return "RADIATOR"
 
-    # Spynos / durys
-    if any(x in t for x in ["spyn", "dur", "pritrauk"]):
+    if "spyn" in t or "dur" in t:
         return "LOCK_DOOR"
 
     return "OTHER"
 
 
+# ---------------- Quantity extraction ----------------
+
 def extract_quantity(text: str):
-    """
-    Returns (qty, unit) where unit in {"m","m2","vnt","aukstas"} or (None,None).
-    """
+
     t = (text or "").lower()
 
-    # Normalize m² to m2
     t = t.replace("m²", "m2")
 
     patterns = [
-        (r"(\d+(?:[.,]\d+)?)\s*m2\b", "m2"),
+        (r"(\d+(?:[.,]\d+)?)\s*m2", "m2"),
         (r"(\d+(?:[.,]\d+)?)\s*m\b", "m"),
-        (r"(\d+(?:[.,]\d+)?)\s*vnt\b", "vnt"),
+        (r"(\d+(?:[.,]\d+)?)\s*vnt", "vnt"),
         (r"(\d+(?:[.,]\d+)?)\s*aukšt", "aukstas"),
     ]
 
     for rgx, unit in patterns:
+
         m = re.search(rgx, t)
+
         if m:
+
             val = float(m.group(1).replace(",", "."))
+
             return val, unit
 
     return None, None
 
 
-def has_trisakis(text: str) -> bool:
+# ---------------- Helpers ----------------
+
+def has_trisakis(text: str):
+
     t = (text or "").lower()
-    return ("trišak" in t) or ("trisak" in t)
+
+    return "trišak" in t or "trisak" in t
 
 
 def get_price(work_type: str, unit: str):
+
     for r in PRICE:
+
         if r["work_type"] == work_type and r["unit"] == unit:
+
             return r
+
     return None
 
 
-# ---------- API schema ----------
+# ---------------- API schema ----------------
+
 class EstimateRequest(BaseModel):
+
     text: str
+
     address: str | None = None
 
 
+# ---------------- API ----------------
+
 @app.post("/estimate")
 def estimate(req: EstimateRequest):
+
     text = (req.text or "").strip()
+
+    # ML prediction
+    cluster_id, cluster_score, cluster_top3 = predict_cluster(text)
+
+    # rule fallback
     work_type = detect_work_type(text)
 
     qty, unit = extract_quantity(text)
+
     followups = []
 
     if work_type == "PIPE_STACK" and qty is None:
-        followups.append("Kiek aukštų keičiamas stovas? (pvz. 1 aukštas, 2 aukštai, 3 aukštai)")
-        followups.append("Ar su trišakiu? (taip/ne)")
+
+        followups.append("Kiek aukštų keičiamas stovas? (pvz. 1 aukštas, 2 aukštai)")
+
+        followups.append("Ar su trišakiu?")
 
     elif work_type in {"PIPE", "SEWER"} and qty is None:
-        followups.append("Kiek metrų (m) vamzdžio reikia keisti / remontuoti? (pvz. 6 m)")
+
+        followups.append("Kiek metrų vamzdžio reikia keisti? (pvz. 6 m)")
 
     elif work_type == "ROOF" and qty is None:
+
         followups.append("Kiek m² stogo remontuojama? (pvz. 12 m2)")
 
     elif work_type == "FACADE_SEAM" and qty is None:
-        followups.append("Kiek metrų (m) tarblokinės siūlės sandarinama? (pvz. 25 m)")
 
-    elif work_type in {"LIGHT", "RADIATOR", "LOCK_DOOR"} and qty is None:
-        followups.append("Kiek vienetų (vnt) reikia keisti / sutvarkyti? (pvz. 2 vnt)")
+        followups.append("Kiek metrų tarblokinės siūlės sandarinama? (pvz. 25 m)")
 
     if followups:
+
         return {
             "status": "need_more_info",
             "work_type_guess": work_type,
             "questions": followups,
+            "cluster": {
+                "id": cluster_id,
+                "score": cluster_score,
+                "top3": cluster_top3
+            }
         }
 
     price = get_price(work_type, unit)
+
     if price is None:
+
         return {
             "status": "no_price_model",
             "work_type_guess": work_type,
-            "message": "Šiam darbui neturiu pakankamai analogų kainai įvertinti. Reikia rangovo pasiūlymo arba tikslesnio darbo tipo.",
+            "message": "Šiam darbui neturiu kainų modelio.",
+            "cluster": {
+                "id": cluster_id,
+                "score": cluster_score,
+                "top3": cluster_top3
+            }
         }
 
-    median = float(price["median_unit_price"])
-    p25 = float(price["p25"])
-    p75 = float(price["p75"])
+    median = price["median_unit_price"]
 
-    trisakis_add = 0.0
+    p25 = price["p25"]
+
+    p75 = price["p75"]
+
+    trisakis_add = 0
+
     if work_type == "PIPE_STACK" and has_trisakis(text):
-        trisakis_add = 60.0
+
+        trisakis_add = 60
 
     est = qty * median + trisakis_add
+
     low = qty * p25 + trisakis_add
+
     high = qty * p75 + trisakis_add
 
     return {
+
         "status": "ok",
+
         "work_type": work_type,
+
         "qty": qty,
+
         "unit": unit,
-        "trisakis_add": trisakis_add,
+
         "estimate_eur_be_pvm": round(est, 2),
+
         "range_eur_be_pvm": [round(low, 2), round(high, 2)],
+
+        "cluster": {
+            "id": cluster_id,
+            "score": cluster_score,
+            "top3": cluster_top3
+        }
     }
