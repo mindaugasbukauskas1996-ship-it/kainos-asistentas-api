@@ -188,7 +188,7 @@ def estimate(req: EstimateRequest):
     low = qty * p25 * coef + trisakis_add
     high = qty * p75 * coef + trisakis_add
 
-    return {
+        return {
         "status": "ok",
         "work_type": work_type,
         "qty": qty,
@@ -200,5 +200,4 @@ def estimate(req: EstimateRequest):
         "assumptions": {
             "water_type": wtype,
         }
-
     }
