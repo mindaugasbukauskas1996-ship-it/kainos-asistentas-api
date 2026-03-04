@@ -36,9 +36,13 @@ with open("price_table.csv", newline="", encoding="utf-8") as f:
 def detect_work_type(text: str) -> str:
     t = (text or "").lower()
 
-    # TARPBLOKINĖS SIŪLĖS
-    if any(x in t for x in ["tarblokin", "tarpblok", "tarp blok", "siūl", "siuli", "siūlių"]):
-        return "FACADE_SEAM"
+# TARPBLOKINĖS SIŪLĖS
+if any(x in t for x in ["tarblokin", "tarpblok", "tarp blok"]):
+    return "FACADE_SEAM"
+if any(x in t for x in ["tarblokin", "tarpblok", "tarp blok", "tarpblokin"]) and any(x in t for x in ["siūl", "siuli", "siūlių", "siuliu"]):
+    return "FACADE_SEAM"
+if any(x in t for x in ["siūl", "siuli", "siūlių", "siuliu"]) and any(x in t for x in ["tarblokin", "tarpblok", "tarp blok", "fasad", "siena"]):
+    return "FACADE_SEAM"
 
     # NUOTEKOS
     if any(x in t for x in ["nuotek", "kanaliz"]):
@@ -217,3 +221,4 @@ def estimate(req: EstimateRequest):
         "range_eur_be_pvm": [round(low, 2), round(high, 2)],
 
     }
+
