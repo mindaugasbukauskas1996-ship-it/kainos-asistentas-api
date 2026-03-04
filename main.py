@@ -1,15 +1,19 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 import re
-import pandas as pd
-import numpy as np
+import csv
 
-app = FastAPI(title="Kainos asistentas API")
-
-# ---------- Load price table ----------
-PRICE = pd.read_csv("price_table.csv")
-PRICE["work_type"] = PRICE["work_type"].astype(str).str.upper()
-PRICE["unit"] = PRICE["unit"].astype(str).str.lower()
+PRICE = []
+with open("price_table.csv", newline="", encoding="utf-8") as f:
+    reader = csv.DictReader(f)
+    for r in reader:
+        PRICE.append({
+            "work_type": (r["work_type"] or "").upper().strip(),
+            "unit": (r["unit"] or "").lower().strip(),
+            "median_unit_price": float(r["median_unit_price"]),
+            "p25": float(r["p25"]),
+            "p75": float(r["p75"]),
+        })
 
 # ---------- Helpers ----------
 UNIT_ALIASES = {
@@ -96,11 +100,10 @@ def water_type(text: str) -> str:
     return "unknown"
 
 def get_price(work_type: str, unit: str):
-    p = PRICE[(PRICE["work_type"] == work_type) & (PRICE["unit"] == unit)]
-    if len(p) == 0:
-        return None
-    r = p.iloc[0].to_dict()
-    return r
+    for r in PRICE:
+        if r["work_type"] == work_type and r["unit"] == unit:
+            return r
+    return None
 
 # ---------- API schema ----------
 class EstimateRequest(BaseModel):
@@ -197,4 +200,5 @@ def estimate(req: EstimateRequest):
         "assumptions": {
             "water_type": wtype,
         }
+
     }
