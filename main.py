@@ -174,7 +174,7 @@ def estimate(req: EstimateRequest):
     t_low = text.lower()
 
     if "stov" in t_low and qty is None:
-        followups.append("Kiek aukštų keičiamas stovas (pvz., 1, 2, 3 aukštai)?")
+        followups.append("Kiek aukštų keičiamas stovas? (pvz. 1 aukštas, 2 aukštai, 3 aukštai)")
         followups.append("Ar su trišakiu (taip/ne)?")
     elif work_type in {"PIPE", "SEWER"} and qty is None:
         followups.append("Kiek metrų (m) vamzdžio/stovo reikia keisti ar remontuoti?")
@@ -248,6 +248,7 @@ elif work_type == "FACADE_SEAM" and qty is None:
             "water_type": wtype,
         },
     }
+
 
 
 
