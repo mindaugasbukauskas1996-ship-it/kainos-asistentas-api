@@ -31,6 +31,36 @@ def detect_work_type(text: str) -> str:
     t = (text or "").lower()
 
     # tarblokinės siūlės (fasadas)
+    if any(x in t for x in ["tarblokin", "tarpblok", "tarp blok", "siūl", "siuli", "siūlių", "siuliu"]) and any(
+        x in t for x in ["fasad", "siena", "tarpblok", "tarblokin"]
+    ):
+        return "FACADE_SEAM"
+
+    # nuotekos / kanalizacija
+    if any(x in t for x in ["nuotek", "kanaliz", "kanalizacij"]):
+        return "SEWER"
+
+    # stovai / vamzdžiai
+    if "stov" in t:
+        return "PIPE_STACK"
+    if "vamzd" in t:
+        return "PIPE"
+
+    # stogas / čerpės / danga
+    if any(x in t for x in ["stog", "čerpi", "cerpi", "danga"]):
+        return "ROOF"
+
+    if any(x in t for x in ["šviest", "lemput", "apsviet", "apšviet", "elektr"]):
+        return "LIGHT"
+    if any(x in t for x in ["radiator", "nuorin"]):
+        return "RADIATOR"
+    if any(x in t for x in ["spyn", "dur", "pritrauk"]):
+        return "LOCK_DOOR"
+
+    return "OTHER"
+    t = (text or "").lower()
+
+    # tarblokinės siūlės (fasadas)
     if any(x in t for x in ["tarblokin", "tarp blok", "tarpblok", "siūl", "siuli", "siūlių", "siuliu"]) and any(
         x in t for x in ["fasad", "siena", "tarpblok", "tarblokin", "tarblok"]
     ):
@@ -218,5 +248,6 @@ elif work_type == "FACADE_SEAM" and qty is None:
             "water_type": wtype,
         },
     }
+
 
 
