@@ -29,18 +29,34 @@ with open("price_table.csv", newline="", encoding="utf-8") as f:
 # ---------- Helpers ----------
 def detect_work_type(text: str) -> str:
     t = (text or "").lower()
+
+    # tarblokinės siūlės (fasadas)
+    if any(x in t for x in ["tarblokin", "tarp blok", "tarpblok", "siūl", "siuli", "siūlių", "siuliu"]) and any(
+        x in t for x in ["fasad", "siena", "tarpblok", "tarblokin", "tarblok"]
+    ):
+        return "FACADE_SEAM"
+
+    # nuotekos / kanalizacija
     if any(x in t for x in ["nuotek", "kanaliz", "kanalizacij"]):
         return "SEWER"
-    if any(x in t for x in ["vamzd", "stov"]):
+
+    # stovai / vamzdžiai
+    if any(x in t for x in ["stov"]):
+        return "PIPE_STACK"
+    if any(x in t for x in ["vamzd"]):
         return "PIPE"
-    if any(x in t for x in ["stog", "čerpi", "cerpi", "danga", "siūl", "siuli"]):
+
+    # stogas / čerpės / danga
+    if any(x in t for x in ["stog", "čerpi", "cerpi", "danga"]):
         return "ROOF"
+
     if any(x in t for x in ["šviest", "lemput", "apsviet", "apšviet", "elektr"]):
         return "LIGHT"
     if any(x in t for x in ["radiator", "nuorin"]):
         return "RADIATOR"
     if any(x in t for x in ["spyn", "dur", "pritrauk"]):
         return "LOCK_DOOR"
+
     return "OTHER"
 
 
@@ -133,9 +149,11 @@ def estimate(req: EstimateRequest):
     elif work_type in {"PIPE", "SEWER"} and qty is None:
         followups.append("Kiek metrų (m) vamzdžio/stovo reikia keisti ar remontuoti?")
         followups.append("Ar tai nuotekos, ar karšto/šalto vandens vamzdis?")
-    elif work_type == "ROOF" and qty is None:
-        followups.append("Kiek stogo remontuojama: m² (plotas) ar m (siūlės)? Parašyk kiekį.")
-        followups.append("Jei čerpės – ar skaičiuojam vnt ar m²?")
+ elif work_type == "ROOF" and qty is None:
+    followups.append("Kiek m² stogo remontuojama? (pvz. 12 m2)")
+    followups.append("Jei čerpės – ar skaičiuojam vnt ar m²?")
+elif work_type == "FACADE_SEAM" and qty is None:
+    followups.append("Kiek metrų (m) tarblokinės siūlės bus sandarinama? (pvz. 25 m)")
     elif work_type in {"LIGHT", "RADIATOR", "LOCK_DOOR"} and qty is None:
         followups.append("Kiek vienetų (vnt) reikia keisti / sutvarkyti?")
 
@@ -200,4 +218,5 @@ def estimate(req: EstimateRequest):
             "water_type": wtype,
         },
     }
+
 
