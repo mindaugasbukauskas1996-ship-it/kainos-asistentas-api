@@ -1,9 +1,17 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
 import re
 import csv
 
 app = FastAPI(title="Kainos asistentas API")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],   # MVP – leidžiam iš visur (vėliau apribosim iki tavo GitHub Pages)
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # ---------- Load price table ----------
 PRICE = []
@@ -192,3 +200,4 @@ def estimate(req: EstimateRequest):
             "water_type": wtype,
         },
     }
+
