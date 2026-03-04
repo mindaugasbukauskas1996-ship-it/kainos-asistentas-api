@@ -1,0 +1,200 @@
+from fastapi import FastAPI
+from pydantic import BaseModel
+import re
+import pandas as pd
+import numpy as np
+
+app = FastAPI(title="Kainos asistentas API")
+
+# ---------- Load price table ----------
+PRICE = pd.read_csv("price_table.csv")
+PRICE["work_type"] = PRICE["work_type"].astype(str).str.upper()
+PRICE["unit"] = PRICE["unit"].astype(str).str.lower()
+
+# ---------- Helpers ----------
+UNIT_ALIASES = {
+    "m2": ["m2", "m²", "kv.m", "kv m", "kvadr.m", "kvadr. m"],
+    "m": ["m", "metras", "metrai", "metrų", "metru", "m."],
+    "vnt": ["vnt", "vnt.", "vienet", "vntnt"],
+    "aukstas": ["aukšt", "aukstas", "aukštas", "aukštų"],
+}
+
+def normalize_text(t: str) -> str:
+    t = (t or "").strip()
+    return t
+
+def detect_work_type(text: str) -> str:
+    t = (text or "").lower()
+    # very simple MVP rules; we'll upgrade later using your work catalog
+    if any(x in t for x in ["nuotek", "kanaliz", "kanalizacij"]):
+        return "SEWER"
+    if any(x in t for x in ["vamzd", "stov"]):
+        return "PIPE"
+    if any(x in t for x in ["stog", "čerpi", "cerpi", "danga", "siūl", "siuli"]):
+        return "ROOF"
+    if any(x in t for x in ["šviest", "lemput", "apsviet", "apšviet", "elektr"]):
+        return "LIGHT"
+    if any(x in t for x in ["radiator", "nuorin"]):
+        return "RADIATOR"
+    if any(x in t for x in ["spyn", "dur", "pritrauk"]):
+        return "LOCK_DOOR"
+    return "OTHER"
+
+def extract_quantity(text: str):
+    """
+    Returns (qty, unit) where unit in {"m","m2","vnt","aukstas"} or (None,None).
+    """
+    t = (text or "").lower()
+    # avoid years like "2025 m."
+    t = re.sub(r"\b(19\d{2}|20\d{2})\s*m\.\b", r"\1 metai", t)
+
+    # Normalize m² to m2
+    t = t.replace("m²", "m2").replace("㎡", "m2")
+
+    patterns = [
+        (r"(\d+(?:[.,]\d+)?)\s*(m2)\b", "m2"),
+        (r"(\d+(?:[.,]\d+)?)\s*(m)\b", "m"),
+        (r"(\d+(?:[.,]\d+)?)\s*(vnt)\b", "vnt"),
+        # aukštai (stovams)
+        (r"(\d+(?:[.,]\d+)?)\s*(aukšt(?:as|ų)?)\b", "aukstas"),
+    ]
+
+    matches = []
+    for rgx, unit in patterns:
+        for m in re.finditer(rgx, t):
+            num = m.group(1).replace(",", ".")
+            try:
+                val = float(num)
+            except:
+                continue
+            if unit == "m" and 1900 <= val <= 2100:
+                continue
+            matches.append((val, unit, m.group(0)))
+
+    # If multiple, prefer m2 then m then aukstas then vnt
+    order = {"m2": 0, "m": 1, "aukstas": 2, "vnt": 3}
+    if matches:
+        matches.sort(key=lambda x: (order.get(x[1], 99), -x[0]))
+        return matches[0][0], matches[0][1]
+    return None, None
+
+def has_trisakis(text: str) -> bool:
+    t = (text or "").lower()
+    return "trišak" in t or "trisak" in t
+
+def water_type(text: str) -> str:
+    """
+    sewer / hot / cold / unknown
+    """
+    t = (text or "").lower()
+    if any(x in t for x in ["nuotek", "kanaliz"]):
+        return "sewer"
+    if any(x in t for x in ["karšto", "karstas", "kv", "karšto vandens"]):
+        return "hot"
+    if any(x in t for x in ["šalto", "saltas", "šalto vandens"]):
+        return "cold"
+    return "unknown"
+
+def get_price(work_type: str, unit: str):
+    p = PRICE[(PRICE["work_type"] == work_type) & (PRICE["unit"] == unit)]
+    if len(p) == 0:
+        return None
+    r = p.iloc[0].to_dict()
+    return r
+
+# ---------- API schema ----------
+class EstimateRequest(BaseModel):
+    text: str
+    address: str | None = None
+
+@app.post("/estimate")
+def estimate(req: EstimateRequest):
+    text = normalize_text(req.text)
+    work_type = detect_work_type(text)
+
+    qty, unit = extract_quantity(text)
+
+    # Questions if missing qty for quantity-style jobs
+    followups = []
+    # Stovams: aukštai + trišakis
+    if "stov" in text.lower() and qty is None:
+        followups.append("Kiek aukštų keičiamas stovas (pvz., 1, 2, 3 aukštai)?")
+        followups.append("Ar su trišakiu (taip/ne)?")
+    elif work_type in {"PIPE", "SEWER"} and qty is None:
+        followups.append("Kiek metrų (m) vamzdžio/stovo reikia keisti ar remontuoti?")
+        followups.append("Ar tai nuotekos, ar karšto/šalto vandens vamzdis?")
+    elif work_type == "ROOF" and qty is None:
+        followups.append("Kiek stogo remontuojama: m² (plotas) ar m (siūlės)? Parašyk kiekį.")
+        followups.append("Jei čerpės – ar skaičiuojam vnt ar m²?")
+    elif work_type in {"LIGHT", "RADIATOR", "LOCK_DOOR"} and qty is None:
+        followups.append("Kiek vienetų (vnt) reikia keisti / sutvarkyti?")
+
+    if followups:
+        return {
+            "status": "need_more_info",
+            "work_type_guess": work_type,
+            "questions": followups[:3],
+        }
+
+    # If qty exists but unit missing or mismatched: ask
+    if qty is not None and unit is None:
+        return {
+            "status": "need_more_info",
+            "work_type_guess": work_type,
+            "questions": ["Nurodykite vienetą: m, m², vnt arba aukštai."],
+        }
+
+    # Default logic: if unit not in table, ask for alternative
+    if work_type == "ROOF" and unit == "m" and "siūl" not in text.lower() and "siuli" not in text.lower():
+        # roof in meters is likely seams; otherwise ask
+        pass
+
+    # price lookup
+    price = get_price(work_type, unit)
+    if price is None:
+        return {
+            "status": "no_price_model",
+            "work_type_guess": work_type,
+            "message": "Šiam darbui neturiu pakankamai analogų kainai įvertinti. Reikia rangovo pasiūlymo arba tikslesnio darbo tipo.",
+        }
+
+    median = float(price["median_unit_price"])
+    p25 = float(price["p25"])
+    p75 = float(price["p75"])
+
+    # Apply simple water-type coefficients for PIPE/SEWER
+    wtype = water_type(text)
+    coef = 1.0
+    if work_type == "SEWER":
+        coef = 0.85
+    elif work_type == "PIPE":
+        # water slightly more expensive than sewer
+        if wtype == "hot":
+            coef = 1.10
+        elif wtype == "cold":
+            coef = 1.05
+        elif wtype == "sewer":
+            coef = 0.85
+
+    # trišakis add-on for stoves (MVP fixed add-on)
+    trisakis_add = 0.0
+    if "stov" in text.lower() and has_trisakis(text):
+        trisakis_add = 60.0
+
+    est = qty * median * coef + trisakis_add
+    low = qty * p25 * coef + trisakis_add
+    high = qty * p75 * coef + trisakis_add
+
+    return {
+        "status": "ok",
+        "work_type": work_type,
+        "qty": qty,
+        "unit": unit,
+        "coef": coef,
+        "trisakis_add": trisakis_add,
+        "estimate_eur_be_pvm": round(est, 2),
+        "range_eur_be_pvm": [round(low, 2), round(high, 2)],
+        "assumptions": {
+            "water_type": wtype,
+        }
+    }
