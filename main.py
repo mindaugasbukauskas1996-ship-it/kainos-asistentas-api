@@ -10,6 +10,9 @@ from openai_parser import parse_text   # tavo esamas parseris
 from rag_search import search_similar  # naujas
 
 app = FastAPI(title="Kainos asistentas API (RAG)")
+@app.get("/health")
+def health():
+    return {"ok": True}
 
 ALLOWED_ORIGINS = [o.strip() for o in os.getenv("ALLOWED_ORIGINS", "*").split(",") if o.strip()]
 app.add_middleware(
@@ -173,3 +176,4 @@ def estimate(req: EstimateRequest):
             "used_analogs": price["used_analogs"],
         }
     }
+
