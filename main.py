@@ -46,6 +46,36 @@ def fallback_work_type(text: str) -> str:
 
     return "OTHER"
 
+def extract_qty_unit_from_text(text: str):
+    """Heuristika: iš teksto ištraukiam kiekį ir vienetą, jei OpenAI parseris nepataikė."""
+    t = norm(text)
+
+    # 12 m2 / 12 m² / 12 m 2
+    m2 = re.search(r"(\d+(?:[\.,]\d+)?)\s*(m2|m\s*2|m²)", t)
+    if m2:
+        qty = float(m2.group(1).replace(",", "."))
+        return qty, "m2"
+
+    # 25 m
+    m = re.search(r"(\d+(?:[\.,]\d+)?)\s*m\b", t)
+    if m:
+        qty = float(m.group(1).replace(",", "."))
+        return qty, "m"
+
+    # 10 vnt
+    vnt = re.search(r"(\d+(?:[\.,]\d+)?)\s*(vnt|vnt\.|vien|vienet)\b", t)
+    if vnt:
+        qty = float(vnt.group(1).replace(",", "."))
+        return qty, "vnt"
+
+    # 2 aukštai / 2 aukstu
+    auk = re.search(r"(\d+(?:[\.,]\d+)?)\s*(aukst|aukstu|aukstuose|aukstai|aukstas)\b", t)
+    if auk:
+        qty = float(auk.group(1).replace(",", "."))
+        return qty, "aukstas"
+
+    return None, None
+
 def pct(xs, p):
     if not xs:
         return None
@@ -58,13 +88,12 @@ def pct(xs, p):
     return xs[f] + (xs[c] - xs[f]) * (k - f)
 
 def calc_from_analogs(analogs: List[Dict[str, Any]], qty: float, unit: str):
-    # Naudojam tik analogus su (cost/qty) kai unit sutampa
     ups = []
     unit_l = (unit or "").lower().strip()
 
     for a in analogs:
         aq = a.get("qty")
-        ac = a.get("cost_be_pvm") or a.get("cost")  # jei rag_search grąžina cost
+        ac = a.get("cost_be_pvm") or a.get("cost")
         au = (a.get("unit") or "").lower().strip()
         if aq and ac and au == unit_l:
             try:
@@ -75,7 +104,6 @@ def calc_from_analogs(analogs: List[Dict[str, Any]], qty: float, unit: str):
             except:
                 pass
 
-    # Leiskim skaičiuoti ir su mažiau analogų (bet bus platesnis intervalas)
     if not ups:
         return None
 
@@ -85,7 +113,7 @@ def calc_from_analogs(analogs: List[Dict[str, Any]], qty: float, unit: str):
         p75 = pct(ups, 0.75)
     elif len(ups) == 2:
         p25, p75 = min(ups), max(ups)
-    else:  # len == 1
+    else:
         p25, p75 = ups[0] * 0.75, ups[0] * 1.25
 
     return {
@@ -127,24 +155,35 @@ def estimate(req: EstimateRequest):
     text = (req.text or "").strip()
     address = (req.address or "").strip()
 
-    # 1) Parseris (OpenAI)
-    parsed = parse_text(text)  # jei vėliau norėsi: parse_text(text, history, address)
+    parsed = parse_text(text)
 
     work_type = (parsed.get("work_type") or "OTHER").strip()
     qty = parsed.get("qty")
     unit = parsed.get("unit")
-    needs = bool(parsed.get("needs_clarification"))
     questions = parsed.get("questions") or parsed.get("clarifying_questions") or []
 
-    # 2) Jei modelis grąžino OTHER – bandome deterministic fallback (ypač siūlėms)
+    # 1) Work type fallback (deterministic)
     if work_type == "OTHER":
         wt2 = fallback_work_type(text)
         if wt2 != "OTHER":
             work_type = wt2
-            needs = False  # nuimam, jei vien dėl work_type trūko
 
-    # 3) Jei trūksta kiekio ar vieneto – klausiame
-    if (qty is None) or (unit is None):
+    # 2) Qty/unit fallback (regex)
+    if qty is None or unit is None:
+        q2, u2 = extract_qty_unit_from_text(text)
+        if qty is None:
+            qty = q2
+        if unit is None:
+            unit = u2
+
+    # 3) Jeigu parseris klausia apie darbo tipą – ignoruojam ir klausiame tik kiekio/vieneto
+    if questions:
+        qtxt = " ".join([str(q) for q in questions]).lower()
+        if "darbo tipo" in qtxt or "atpa" in qtxt and "darbo" in qtxt and "tipo" in qtxt:
+            questions = []
+
+    # 4) Jei trūksta qty arba unit – klausiame
+    if qty is None or unit is None:
         if not questions:
             t = norm(text)
             if "stov" in t:
@@ -155,7 +194,7 @@ def estimate(req: EstimateRequest):
                 questions = ["Kiek m² remontuojama? (pvz. 12 m2)"]
             else:
                 questions = ["Nurodykite kiekį ir vienetą (m, m2, vnt, aukštai)."]
-
+        # suggestions
         suggestions = []
         t = norm(text)
         if "stog" in t:
@@ -184,11 +223,11 @@ def estimate(req: EstimateRequest):
             "suggestions": suggestions,
         }
 
-    # 4) Net jei work_type liko OTHER, mes GALIM skaičiuoti pagal RAG analogus
+    # 5) RAG retrieval
     query = text + (" " + address if address else "")
     analogs = search_similar(query, limit=12)
 
-    # 5) Skaičiuojam kainą
+    # 6) Price calc
     try:
         qty_f = float(qty)
     except:
