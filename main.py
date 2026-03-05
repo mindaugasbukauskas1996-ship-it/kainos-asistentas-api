@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from openai_parser import parse_text
+
+from openai_parser import parse_text  # <-- jau buvo, bet dabar panaudosim realiai
 
 import csv
 import re
@@ -37,6 +38,9 @@ with open("price_table.csv", newline="", encoding="utf-8") as f:
             "p75": float(r["p75"]),
         })
 
+ALLOWED_WORK_TYPES = set([r["work_type"] for r in PRICE])
+ALLOWED_UNITS = set([r["unit"] for r in PRICE])
+
 def get_price(work_type: str, unit: str) -> Optional[Dict[str, Any]]:
     for r in PRICE:
         if r["work_type"] == work_type and r["unit"] == unit:
@@ -52,7 +56,6 @@ if os.path.exists(HIST_PATH):
     with open(HIST_PATH, newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for i, r in enumerate(reader):
-            # Normalize
             wt = (r.get("work_type") or "").upper().strip()
             unit = (r.get("unit") or "").lower().strip()
             try:
@@ -98,9 +101,7 @@ def pick_analogs(work_type: str, unit: str, qty: Optional[float], top_k: int = 5
         up = r.get("unit_price")
         if up is None:
             continue
-        # Primary: closeness to median unit price
         s = abs(up - target_up) if target_up is not None else 0.0
-        # Secondary: closeness to qty (if we have qty)
         if qty is not None and r.get("qty") is not None:
             s += 0.05 * abs(r["qty"] - qty)
         scored.append((s, r))
@@ -177,7 +178,6 @@ def predict_cluster(text: str):
 def detect_work_type(text: str) -> str:
     t = (text or "").lower()
 
-    # Tarblokinės / tarpblokinių siūlių sandarinimas (fasadas) – visada m
     if any(x in t for x in ["tarblokin", "tarpblok", "tarp blok"]):
         return "FACADE_SEAM"
     if any(x in t for x in ["siūl", "siuli", "siūlių", "siuliu"]) and any(x in t for x in ["fasad", "siena", "tarpblok", "tarblokin"]):
@@ -186,15 +186,12 @@ def detect_work_type(text: str) -> str:
     if any(x in t for x in ["nuotek", "kanaliz", "kanalizacij"]):
         return "SEWER"
 
-    # Stovai (€/aukštas)
     if "stov" in t:
         return "PIPE_STACK"
 
-    # Vamzdžiai (€/m)
     if "vamzd" in t:
         return "PIPE"
 
-    # Stogas (m2)
     if any(x in t for x in ["stog", "čerpi", "cerpi", "danga"]):
         return "ROOF"
 
@@ -236,6 +233,53 @@ def has_trisakis(text: str) -> bool:
     t = (text or "").lower()
     return ("trišak" in t) or ("trisak" in t)
 
+def normalize_work_type_unit(work_type: Optional[str], unit: Optional[str], raw_text: str) -> Tuple[Optional[str], Optional[str]]:
+    """
+    Saugiai sulygina (work_type, unit) prie mūsų lentelės:
+    - stovas -> aukstas
+    - stogas -> m2
+    - fasado siūlė -> m
+    """
+    if not work_type:
+        return None, None
+
+    wt = str(work_type).upper().strip()
+    u = (str(unit).lower().strip() if unit else None)
+
+    t = (raw_text or "").lower()
+
+    # Force unit by domain rules
+    if wt == "PIPE_STACK":
+        u = "aukstas"
+    elif wt == "ROOF":
+        # stogas – m2 (jei vartotojas parašė m, tegu parseris grąžina m tik jei siūlės, bet čia ROOF)
+        u = "m2" if u is None else u
+    elif wt == "FACADE_SEAM":
+        u = "m"
+
+    # Validate against our price table values
+    if wt not in ALLOWED_WORK_TYPES:
+        return None, None
+    if u is not None and u not in ALLOWED_UNITS:
+        u = None
+
+    return wt, u
+
+def default_followups(work_type: str, qty: Optional[float]) -> List[str]:
+    followups = []
+    if work_type == "PIPE_STACK" and qty is None:
+        followups.append("Kiek aukštų keičiamas stovas? (pvz. 1 aukštas, 2 aukštai, 3 aukštai)")
+        followups.append("Ar su trišakiu? (taip/ne)")
+    elif work_type in {"PIPE", "SEWER"} and qty is None:
+        followups.append("Kiek metrų (m) reikia keisti / remontuoti? (pvz. 6 m)")
+    elif work_type == "ROOF" and qty is None:
+        followups.append("Kiek m² stogo remontuojama? (pvz. 12 m2)")
+    elif work_type == "FACADE_SEAM" and qty is None:
+        followups.append("Kiek metrų (m) tarblokinės siūlės sandarinama? (pvz. 25 m)")
+    elif work_type in {"LIGHT", "RADIATOR", "LOCK_DOOR"} and qty is None:
+        followups.append("Kiek vienetų (vnt) reikia keisti / sutvarkyti? (pvz. 2 vnt)")
+    return followups
+
 # ---------------- API schema ----------------
 class EstimateRequest(BaseModel):
     text: str
@@ -249,24 +293,67 @@ def estimate(req: EstimateRequest):
     # ML prediction (for debugging / future mapping)
     cluster_id, cluster_score, cluster_top3 = predict_cluster(text)
 
-    # For now: keep stable rules for work_type (later we'll map cluster -> work_type)
-    work_type = detect_work_type(text)
+    # 1) Bandome OpenAI parserį
+    parsed = None
+    try:
+        parsed = parse_text(text)
+    except Exception:
+        parsed = None
 
+    # 2) Iš OpenAI parserio pasiimam work_type/qty/unit, jei jie yra
+    wt_ai = None
+    qty_ai = None
+    unit_ai = None
+    questions_ai: List[str] = []
+    needs_ai = False
+
+    if isinstance(parsed, dict):
+        wt_ai = parsed.get("work_type") or parsed.get("work_type_guess")
+        qty_ai = parsed.get("qty")
+        unit_ai = parsed.get("unit")
+        needs_ai = bool(parsed.get("needs_clarification")) or bool(parsed.get("need_more_info"))
+        # klausimų raktai gali skirtis (kad nebūtų trapu)
+        q = parsed.get("questions") or parsed.get("clarifying_questions") or []
+        if isinstance(q, list):
+            questions_ai = [str(x) for x in q if str(x).strip()]
+
+    # 3) Jei AI sako “reikia patikslinti” – grąžinam jo klausimus (arba mūsų fallback)
+    if needs_ai:
+        # bandome normalizuoti work_type (jei nepavyksta – fallback iš taisyklių)
+        work_type = detect_work_type(text)
+        if wt_ai:
+            wt_norm, _ = normalize_work_type_unit(wt_ai, unit_ai, text)
+            if wt_norm:
+                work_type = wt_norm
+
+        followups = questions_ai or default_followups(work_type, None) or ["Nurodykite kiekį su vienetu: m, m2, vnt arba aukštai."]
+
+        return {
+            "status": "need_more_info",
+            "work_type_guess": work_type,
+            "questions": followups,
+            "cluster": {"id": cluster_id, "score": cluster_score, "top3": cluster_top3},
+        }
+
+    # 4) Jei AI pateikė work_type/qty/unit – naudojam juos. Jei ne, fallback į tavo taisykles/regex.
+    work_type = detect_work_type(text)
     qty, unit = extract_quantity(text)
 
-    followups = []
-    if work_type == "PIPE_STACK" and qty is None:
-        followups.append("Kiek aukštų keičiamas stovas? (pvz. 1 aukštas, 2 aukštai, 3 aukštai)")
-        followups.append("Ar su trišakiu? (taip/ne)")
-    elif work_type in {"PIPE", "SEWER"} and qty is None:
-        followups.append("Kiek metrų (m) reikia keisti / remontuoti? (pvz. 6 m)")
-    elif work_type == "ROOF" and qty is None:
-        followups.append("Kiek m² stogo remontuojama? (pvz. 12 m2)")
-    elif work_type == "FACADE_SEAM" and qty is None:
-        followups.append("Kiek metrų (m) tarblokinės siūlės sandarinama? (pvz. 25 m)")
-    elif work_type in {"LIGHT", "RADIATOR", "LOCK_DOOR"} and qty is None:
-        followups.append("Kiek vienetų (vnt) reikia keisti / sutvarkyti? (pvz. 2 vnt)")
+    if wt_ai or unit_ai:
+        wt_norm, u_norm = normalize_work_type_unit(wt_ai, unit_ai, text)
+        if wt_norm:
+            work_type = wt_norm
+        if u_norm:
+            unit = u_norm
 
+    if qty_ai is not None:
+        try:
+            qty = float(qty_ai)
+        except:
+            pass
+
+    # 5) Jei trūksta qty/unit – klausiame kaip anksčiau (UI veiks taip pat)
+    followups = default_followups(work_type, qty)
     if followups:
         return {
             "status": "need_more_info",
@@ -283,6 +370,7 @@ def estimate(req: EstimateRequest):
             "cluster": {"id": cluster_id, "score": cluster_score, "top3": cluster_top3},
         }
 
+    # 6) Kainos modelis
     price = get_price(work_type, unit)
     if price is None:
         return {
@@ -298,6 +386,7 @@ def estimate(req: EstimateRequest):
 
     trisakis_add = 0.0
     if work_type == "PIPE_STACK" and has_trisakis(text):
+        # paliekam kaip buvo (jei norėsi, vėliau padarysim iš istorijos)
         trisakis_add = 60.0
 
     est = qty * median + trisakis_add
@@ -317,4 +406,3 @@ def estimate(req: EstimateRequest):
         "analogs": analogs,
         "cluster": {"id": cluster_id, "score": cluster_score, "top3": cluster_top3},
     }
-
