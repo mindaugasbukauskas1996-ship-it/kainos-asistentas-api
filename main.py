@@ -81,7 +81,6 @@ def health():
     return {"ok": True}
 
 @app.post("/estimate")
-analogs = search_similar(req.text + (" " + (req.address or "") if req.address else ""), limit=12)
 def estimate(req: EstimateRequest):
     text = (req.text or "").strip()
     address = (req.address or "").strip()
@@ -178,5 +177,6 @@ def estimate(req: EstimateRequest):
             "used_analogs": price["used_analogs"],
         }
     }
+
 
 
