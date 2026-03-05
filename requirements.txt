@@ -7,3 +7,8 @@ uvicorn
 requests
 psycopg[binary]
 numpy
+fastapi
+uvicorn[standard]
+requests
+psycopg[binary]
+python-dotenv
