@@ -6,6 +6,13 @@ from rag_search import search_similar
 import os
 import re
 import statistics
+import unicodedata
+
+def norm(s: str) -> str:
+    s = (s or "").lower()
+    s = unicodedata.normalize("NFKD", s)
+    s = "".join(ch for ch in s if not unicodedata.combining(ch))  # pašalina ąčęėįšųūž → aceeisuuz
+    return s
 
 from openai_parser import parse_text   # tavo esamas parseris
 from rag_search import search_similar  # naujas
@@ -177,6 +184,7 @@ def estimate(req: EstimateRequest):
             "used_analogs": price["used_analogs"],
         }
     }
+
 
 
 
