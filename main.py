@@ -6,8 +6,7 @@ import os
 import re
 import statistics
 
-from rag_search import search_similar, detect_domain  # naudosim tavo rag_search domenui
-
+from rag_search import search_similar, detect_domain
 
 app = FastAPI(title="Kainos asistentas API (RAG)")
 
@@ -19,7 +18,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 @app.get("/health")
 def health():
@@ -53,33 +51,24 @@ def extract_qty(text: str):
     """
     Ištraukia kiekį:
       - "25 m", "12 m2", "2 aukšt", "2 aukst", "2 aukštų"
-    Grąžina (qty: float|None, unit_guess: str|None)
     """
     t = (text or "").lower()
 
-    # m2 / m²
     m2 = re.search(r"(\d+(?:[.,]\d+)?)\s*(m2|m²)\b", t)
     if m2:
-        qty = float(m2.group(1).replace(",", "."))
-        return qty, "m2"
+        return float(m2.group(1).replace(",", ".")), "m2"
 
-    # metrai (m)
     m = re.search(r"(\d+(?:[.,]\d+)?)\s*m\b", t)
     if m:
-        qty = float(m.group(1).replace(",", "."))
-        return qty, "m"
+        return float(m.group(1).replace(",", ".")), "m"
 
-    # aukštai
     a = re.search(r"(\d+(?:[.,]\d+)?)\s*(aukst|aukšt)\b", t)
     if a:
-        qty = float(a.group(1).replace(",", "."))
-        return qty, "aukstas"
+        return float(a.group(1).replace(",", ".")), "aukstas"
 
-    # vnt
     v = re.search(r"(\d+(?:[.,]\d+)?)\s*(vnt|v)\b", t)
     if v:
-        qty = float(v.group(1).replace(",", "."))
-        return qty, "vnt"
+        return float(v.group(1).replace(",", ".")), "vnt"
 
     return None, None
 
@@ -95,10 +84,6 @@ def work_type_from_domain(domain: str) -> str:
 
 
 def unit_from_domain(domain: str) -> str:
-    # pagal tavo taisykles:
-    # siūlė = m
-    # stogas = m2
-    # stovas = aukštas
     if domain == "seam":
         return "m"
     if domain == "roof":
@@ -110,10 +95,10 @@ def unit_from_domain(domain: str) -> str:
 
 def calc_from_analogs(analogs: List[Dict[str, Any]], qty: float, unit: str):
     """
-    Skaičiuoja kainą iš analogų:
+    Skaičiuoja iš analogų:
     unit_price = cost / qty
-    Naudojam tik analogus, kurie turi qty ir cost > 0.
-    Jei analogų unit tuščias – nefiltruojam per unit, o remiamės iškviestu 'unit' iš domeno.
+    Naudoja tik analogus su qty ir cost > 0.
+    Jei analogų unit tuščias – leidžiam (nes jūsų duomenyse taip dažnai būna).
     """
     ups = []
     used = []
@@ -131,7 +116,6 @@ def calc_from_analogs(analogs: List[Dict[str, Any]], qty: float, unit: str):
         if aq <= 0 or ac <= 0:
             continue
 
-        # jei analogas turi unit ir jis nesutampa – praleidžiam
         au = (a.get("unit") or "").lower().strip()
         if au and unit and au != unit.lower():
             continue
@@ -156,79 +140,121 @@ def calc_from_analogs(analogs: List[Dict[str, Any]], qty: float, unit: str):
     }
 
 
+def build_chat_reply_ok(work_type: str, qty: float, unit: str, estimate: float, rng: List[float], analogs: List[Dict[str, Any]]):
+    lines = []
+    lines.append(f"Preliminari kaina (be PVM): **{estimate:.2f} €**")
+    lines.append(f"Intervalas (be PVM): **{rng[0]:.2f}–{rng[1]:.2f} €**")
+    lines.append(f"Kiekis: **{qty:g} {unit}**")
+    lines.append("")
+    lines.append("Panašūs analogai (patikrai pagal pranešimo nr.):")
+    for a in analogs[:5]:
+        reg = a.get("registration_nr") or "-"
+        title = a.get("title") or ""
+        addr = a.get("address") or ""
+        cost = a.get("cost")
+        u = a.get("unit") or ""
+        q = a.get("qty")
+        if cost is None or q is None:
+            lines.append(f"• **{reg}** — {title} ({addr})")
+        else:
+            lines.append(f"• **{reg}** — {title} ({addr}) | {q} {u} | {float(cost):.2f} €")
+    return "\n".join(lines)
+
+
+def build_chat_reply_need_more(domain: str):
+    if domain == "seam":
+        return (
+            "Kad paskaičiuočiau, reikia kiekio.\n"
+            "Parašyk, **kiek metrų (m)** tarplokinės siūlės sandarinama (pvz. „25 m“)."
+        )
+    if domain == "roof":
+        return (
+            "Kad paskaičiuočiau, reikia kiekio.\n"
+            "Parašyk, **kiek m²** stogo remontuojama (pvz. „12 m2“)."
+        )
+    if domain == "stack":
+        return (
+            "Kad paskaičiuočiau, reikia kiekio.\n"
+            "Parašyk, **kiek aukštų** keičiamas stovas (pvz. „2 aukštai“)."
+        )
+    return "Kad paskaičiuočiau, nurodyk kiekį (pvz. 25 m / 12 m2 / 2 aukštai / 3 vnt)."
+
+
+def suggestions_for_domain(domain: str):
+    if domain == "seam":
+        return [
+            {"title": "Tarplokinė siūlė fasade", "example": "Reikia sandarinti 25 m tarplokinės siūlės fasade"},
+            {"title": "Sandarinti siūles (pelėsis bute)", "example": "Reikia sandarinti 12 m siūlių fasade, dėl pelėsio bute"},
+        ]
+    if domain == "roof":
+        return [
+            {"title": "Plokščias stogas", "example": "Reikia sutvarkyti 12 m2 plokščio stogo dangos"},
+            {"title": "Šlaitinis stogas (čerpės)", "example": "Reikia pakeisti 10 m2 čerpių (šlaitinis stogas)"},
+        ]
+    if domain == "stack":
+        return [
+            {"title": "Stovas (aukštai)", "example": "Reikia pakeisti 2 aukštų stovą"},
+            {"title": "Stovas su trišakiu (nuotekoms)", "example": "Reikia pakeisti 2 aukštų nuotekų stovą su trišakiu"},
+        ]
+    return []
+
+
 @app.post("/estimate")
 def estimate(req: EstimateRequest):
     text = (req.text or "").strip()
     address = (req.address or "").strip()
 
-    # 1) Nustatom domeną + work_type + default unit
-    domain = detect_domain(text + (" " + address if address else ""))
+    query = text + (" " + address if address else "")
+
+    # Domenas -> work_type + default unit
+    domain = detect_domain(query)
     work_type = work_type_from_domain(domain)
     default_unit = unit_from_domain(domain)
 
-    # 2) Ištraukiam qty + unit iš teksto
+    # Kiekis iš teksto
     qty, unit_guess = extract_qty(text)
 
-    # 3) Jei nėra qty – klausiam
+    # Jei nėra kiekio – grąžinam chat klausimą + suggestions
     if qty is None:
-        if domain == "seam":
-            return {
-                "status": "need_more_info",
-                "work_type_guess": work_type,
-                "questions": ["Kiek metrų (m) tarplokinės siūlės sandarinama? (pvz. 25 m)"],
-                "suggestions": [
-                    {"title": "Tarplokinė siūlė fasade (m)", "example": "Reikia sandarinti 25 m tarplokinės siūlės fasade"}
-                ]
-            }
-        if domain == "roof":
-            return {
-                "status": "need_more_info",
-                "work_type_guess": work_type,
-                "questions": ["Kiek m² stogo remontuojama? (pvz. 12 m2)"],
-                "suggestions": [
-                    {"title": "Plokščias stogas (m2)", "example": "Reikia sutvarkyti 12 m2 plokščio stogo dangos"},
-                    {"title": "Šlaitinis stogas (m2)", "example": "Reikia pakeisti 10 m2 čerpių (šlaitinis stogas)"},
-                ]
-            }
-        if domain == "stack":
-            return {
-                "status": "need_more_info",
-                "work_type_guess": work_type,
-                "questions": ["Kiek aukštų keičiamas stovas? (pvz. 1 aukštas, 2 aukštai)"],
-                "suggestions": [
-                    {"title": "Stovas (aukštai)", "example": "Reikia pakeisti 2 aukštų stovą"}
-                ]
-            }
-
         return {
             "status": "need_more_info",
             "work_type_guess": work_type,
-            "questions": ["Nurodykite kiekį (pvz. 25 m / 12 m2 / 2 aukštai / 3 vnt)."]
+            "reply_text": build_chat_reply_need_more(domain),
+            "questions": ["Nurodykite kiekį (su vienetu)."],
+            "suggestions": suggestions_for_domain(domain),
         }
 
-    # 4) Unit: jei tekste parašyta unit – imam ją, kitaip imam domeno default
     unit = unit_guess or default_unit
-
-    # jei domenas seam – priverstinai m (kad neklaidintų)
     if domain == "seam":
-        unit = "m"
+        unit = "m"  # priverstinai
+    if domain == "roof":
+        unit = "m2"
+    if domain == "stack":
+        unit = "aukstas"
 
-    # 5) RAG analogai
-    query = text + (" " + address if address else "")
+    # RAG analogai
     analogs = search_similar(query, limit=12)
 
-    # 6) Skaičiuojam
+    # Skaičiavimas
     price = calc_from_analogs(analogs, float(qty), unit)
     if not price:
         return {
             "status": "no_price_model",
             "work_type_guess": work_type,
-            "message": "Neradau pakankamai tinkamų analogų su qty/cost šiam darbui patikimai įvertinti. Reikia patikslinti arba prašyti rangovo pasiūlymo.",
+            "reply_text": "Neradau pakankamai tinkamų analogų su qty/cost šiam darbui patikimai įvertinti. Reikia patikslinti arba prašyti rangovo pasiūlymo.",
             "analogs": analogs[:5],
         }
 
-    # 7) Grąžinam top 5 analogus su registration_nr
     top5 = price["used_analogs"][:5]
+    reply = build_chat_reply_ok(
+        work_type=work_type,
+        qty=float(qty),
+        unit=unit,
+        estimate=price["estimate"],
+        rng=price["range"],
+        analogs=top5,
+    )
+
     return {
         "status": "ok",
         "work_type": work_type,
@@ -236,6 +262,8 @@ def estimate(req: EstimateRequest):
         "unit": unit,
         "estimate_eur_be_pvm": price["estimate"],
         "range_eur_be_pvm": price["range"],
+        "reply_text": reply,
+        "suggestions": suggestions_for_domain(domain),
         "analogs": top5,
         "meta": {
             "domain": domain,
