@@ -11,32 +11,20 @@ def embed(text: str):
 
     r = requests.post(
         "https://api.openai.com/v1/embeddings",
-        headers={
-            "Authorization": f"Bearer {OPENAI_API_KEY}",
-            "Content-Type": "application/json",
-        },
+        headers={"Authorization": f"Bearer {OPENAI_API_KEY}", "Content-Type": "application/json"},
         json={"model": EMBED_MODEL, "input": text[:8000]},
         timeout=60,
     )
-    if r.status_code != 200:
-        raise RuntimeError(f"OpenAI embeddings error {r.status_code}: {r.text}")
-    j = r.json()
-    return j["data"][0]["embedding"]
+    r.raise_for_status()
+    return r.json()["data"][0]["embedding"]
 
-def search_similar(user_text: str, limit: int = 12):
-    vec = embed(user_text)
+def search_similar(query: str, limit: int = 12):
+    vec = embed(query)
     with get_conn() as conn:
         cur = conn.cursor()
         cur.execute(
             """
-            select
-              registration_nr,
-              address,
-              title,
-              qty,
-              unit,
-              cost,
-              contractor
+            select registration_nr, address, title, qty, unit, cost, contractor
             from jobs
             order by embedding <-> %s
             limit %s
@@ -45,15 +33,15 @@ def search_similar(user_text: str, limit: int = 12):
         )
         rows = cur.fetchall()
 
-    analogs = []
-    for r in rows:
-        analogs.append({
-            "registration_nr": r[0],
+    return [
+        {
+            "registration_nr": r[0],  # <-- pranešimo nr (KA pasitikrinimui)
             "address": r[1],
             "title": r[2],
             "qty": r[3],
             "unit": r[4],
             "cost_be_pvm": r[5],
             "contractor": r[6],
-        })
-    return analogs
+        }
+        for r in rows
+    ]
