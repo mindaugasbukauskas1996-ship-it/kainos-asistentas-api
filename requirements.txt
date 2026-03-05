@@ -12,3 +12,8 @@ uvicorn[standard]
 requests
 psycopg[binary]
 python-dotenv
+fastapi
+uvicorn[standard]
+requests
+psycopg[binary]
+python-multipart
