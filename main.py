@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from openai_parser import parse_text
 
 import csv
 import re
@@ -316,3 +317,4 @@ def estimate(req: EstimateRequest):
         "analogs": analogs,
         "cluster": {"id": cluster_id, "score": cluster_score, "top3": cluster_top3},
     }
+
