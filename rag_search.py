@@ -7,51 +7,48 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 client = OpenAI(api_key=OPENAI_API_KEY)
 
+EMBED_MODEL = os.getenv("EMBED_MODEL", "text-embedding-3-small")
+
+
 def embed(text: str):
     r = client.embeddings.create(
-        model=os.getenv("EMBED_MODEL", "text-embedding-3-small"),
+        model=EMBED_MODEL,
         input=text
     )
     return r.data[0].embedding
 
 
 def vec_to_pgvector(vec):
-    # konvertuoja python list -> pgvector string
+    # pgvector tekstinis formatas: [0.1,0.2,0.3]
     return "[" + ",".join(str(x) for x in vec) + "]"
 
 
 def search_similar(query: str, limit: int = 12):
-
     vec = embed(query)
     vec_pg = vec_to_pgvector(vec)
 
     with psycopg.connect(DB_URL, sslmode="require") as conn:
         with conn.cursor() as cur:
-
             cur.execute(
                 """
                 SELECT
-                    job_id,
-                    registration_nr_full as registration_nr,
-                    samatos_pavadinimas as title,
-                    qty_extracted as qty,
+                    id,
+                    registration_nr,
+                    address,
+                    title,
+                    qty,
                     unit,
-                    cost_be_pvm_eur as cost_be_pvm,
+                    cost as cost_be_pvm,
                     contractor,
-                    address_final as address
+                    text_full,
+                    (embedding <-> (%s)::vector) as distance
                 FROM jobs
                 ORDER BY embedding <-> (%s)::vector
-                LIMIT %s
+                LIMIT %s;
                 """,
-                (vec_pg, limit),
+                (vec_pg, vec_pg, limit),
             )
-
             rows = cur.fetchall()
             cols = [d.name for d in cur.description]
 
-    result = []
-
-    for r in rows:
-        result.append(dict(zip(cols, r)))
-
-    return result
+    return [dict(zip(cols, r)) for r in rows]
