@@ -17,3 +17,7 @@ uvicorn[standard]
 requests
 psycopg[binary]
 python-multipart
+openai>=1.0.0
+psycopg[binary]>=3.1.0
+fastapi
+uvicorn
