@@ -18,28 +18,18 @@ def _client() -> OpenAI:
 
 
 def embed(text: str):
-    """
-    Sugeneruoja embedding vektorių per OpenAI.
-    """
     c = _client()
     r = c.embeddings.create(model=EMBED_MODEL, input=text)
     return r.data[0].embedding
 
 
 def vec_to_pgvector(vec):
-    """
-    Konvertuoja list[float] į pgvector tekstinį formatą: [0.1,0.2,...]
-    """
     return "[" + ",".join(f"{float(x)}" for x in vec) + "]"
 
 
 def detect_domain(query: str) -> str:
-    """
-    Atpažįsta užklausos temą.
-    """
     q = (query or "").lower()
 
-    # Siūlės / sandarinimas
     if (
         "tarplokin" in q
         or "tarpblokin" in q
@@ -52,7 +42,6 @@ def detect_domain(query: str) -> str:
     ):
         return "seam"
 
-    # Stogas
     if (
         "stog" in q
         or "čerp" in q
@@ -60,10 +49,10 @@ def detect_domain(query: str) -> str:
         or "ruberoid" in q
         or "bitum" in q
         or "skardin" in q
+        or "pratek" in q
     ):
         return "roof"
 
-    # Stovai / vamzdynai
     if (
         "stov" in q
         or "nuotek" in q
@@ -79,9 +68,6 @@ def detect_domain(query: str) -> str:
 
 
 def build_where_clause(domain: str) -> str:
-    """
-    Sugeneruoja WHERE filtrą. SVARBU: LIKE '%%...%%' (dvigubas %).
-    """
     if domain == "seam":
         return """
         WHERE (
@@ -95,7 +81,6 @@ def build_where_clause(domain: str) -> str:
             lower(text_full) LIKE '%%poliuretan%%'
         )
         """
-
     if domain == "roof":
         return """
         WHERE (
@@ -108,7 +93,6 @@ def build_where_clause(domain: str) -> str:
             lower(text_full) LIKE '%%skardin%%'
         )
         """
-
     if domain == "stack":
         return """
         WHERE (
@@ -121,16 +105,10 @@ def build_where_clause(domain: str) -> str:
             lower(text_full) LIKE '%%trisak%%'
         )
         """
-
     return ""
 
 
 def search_similar(query: str, limit: int = 12):
-    """
-    Randa panašius įrašus Supabase (pgvector).
-    Lentelė: jobs
-    Stulpeliai: id, registration_nr, address, title, qty, unit, cost, contractor, text_full, embedding
-    """
     db_url = _must_env("SUPABASE_DB_URL")
 
     vec = embed(query)
@@ -163,9 +141,6 @@ def search_similar(query: str, limit: int = 12):
                 cur.execute(sql, (vec_pg, vec_pg, limit))
                 rows = cur.fetchall()
                 cols = [d.name for d in cur.description]
-
         return [dict(zip(cols, r)) for r in rows]
-
     except Exception as e:
-        # šitas tekstas matysis Render loguose
         raise RuntimeError(f"rag_search failed: {type(e).__name__}: {e}")
